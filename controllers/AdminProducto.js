@@ -21,7 +21,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo patch AdminProducto
 module.exports.actualizar = app.patch('/', (req, res) => {
     const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = "UPDATE PRODUCTOS SET NOMBRE = ?, VALOR = ?, STOCK = ?, IMAGEN = ?, PROMOCIONES_ID_PROMOCIONES = ?, ESPECIES_ID_ESPECIES = ? WHERE ID_PRODUCTOS = ?";
+    const sql = "UPDATE PRODUCTOS SET NOMBRE = ?, VALOR = ?, STOCK = ?, IMAGEN = ?, PROMOCIONES_ID_PROMOCIONES = ?, ID_ESPECIE = ? WHERE ID_PRODUCTOS = ?";
     const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES, ID_PRODUCTOS ];
 
     connection.query(sql, values, (error, results) => {

@@ -32,11 +32,11 @@ app.listen(port, function (){
 });
 
 const AdminProducto = require('./controllers/AdminProducto');
-const Donación = require('./controllers/Donación');
+// const Donación = require('./controllers/Donación');
 const Especie = require('./controllers/Especie');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
-const Ventas = require('./controllers/Ventas');
+// const Ventas = require('./controllers/Ventas');
 
 //metodos
 function controladores() {
@@ -51,10 +51,9 @@ function controladores() {
         // rutas
     //Funcion de consultar Especie
     app.use('/api/Especie/', Especie.agregar);
-	app.use('/api/Especie/', Especie.buscar_todo);
-    app.use('/api/Especie/', Especie.actualizar);
+	app.use('/api/Especie/', Especie.buscar_todoEspecies);
+    app.use('/api/Especie/', Especie.actualizarEspecies);
     app.use('/api/Especie/', Especie.eliminar);
-
 
 
         // rutas
@@ -63,6 +62,14 @@ function controladores() {
 	app.use('/api/roles/', roles.buscar_todo);
     app.use('/api/roles/', roles.actualizar);
     app.use('/api/roles/', roles.eliminar);
+    app.use('/api/roles/', roles.eliminar_estado);
+
+            // rutas
+    //Funcion de consultar Promociones
+    app.use('/api/Promociones/', Promociones.agregar);
+	app.use('/api/Promociones/', Promociones.buscar_todo);
+    app.use('/api/Promociones/', Promociones.actualizar);
+    app.use('/api/Promociones/', Promociones.eliminar);
 
 
 }

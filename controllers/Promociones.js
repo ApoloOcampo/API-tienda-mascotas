@@ -30,9 +30,9 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 
 //metodo post PRODUCTOS
 module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
-    const sql = "INSERT INTO PROMOCIONES (NOMBRE) VALUES (?, ?)";
-    const values = [nombre, 1];
+    const { NOMBRE } = req.body;
+    const sql = "INSERT INTO PROMOCIONES (NOMBRE, ESTADO) VALUES ( ?, ?";
+    const values = [NOMBRE, 1];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
