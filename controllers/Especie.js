@@ -7,7 +7,11 @@ const app = express();
 
 //metodo GET ESPECIES
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = "SELECT id_especies, nombre, estado FROM ESPECIES";
+    const sql = `SELECT
+                id_especies,
+                nombre, 
+                estado 
+                FROM ESPECIES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -21,7 +25,9 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo PATCH ESPECIES
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { id_especies, nombre } = req.body;
-    const sql = "UPDATE ESPECIES SET nombre = ? WHERE id_especies = ?";
+    const sql = `UPDATE ESPECIES SET 
+                        nombre = ?
+                        WHERE id_especies = `;
     const values = [nombre];
 
     connection.query(sql, values, (error, results) => {
@@ -33,7 +39,9 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 //metodo post ESPECIES
 module.exports.agregar = app.post('/', (req, res) => {
     const { nombre } = req.body;
-    const sql = "INSERT INTO ESPECIES (nombre, estado) VALUES (?, ?)";
+    const sql = `INSERT INTO ESPECIES
+                        (nombre, estado)
+                        VALUES (?, ?)`;
     const values = [nombre, 1];
 
     connection.query(sql, values, (error, results) => {

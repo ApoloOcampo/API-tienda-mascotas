@@ -6,7 +6,10 @@ const app = express();
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = "SELECT id_promociones, nombre FROM PROMOCIONES";
+    const sql = `SELECT 
+                id_promociones, 
+                nombre
+                FROM PROMOCIONES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -19,7 +22,9 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { id_promociones, nombre } = req.body;
-    const sql = "UPDATE PROMOCIONES SET nombre = ? WHERE id_promociones = ?";
+    const sql = `UPDATE PROMOCIONES SET 
+                nombre = ?
+                WHERE id_promociones = ?`;
     const values = [nombre];
 
     connection.query(sql, values, (error, results) => {
@@ -31,7 +36,9 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 //metodo post PRODUCTOS
 module.exports.agregar = app.post('/', (req, res) => {
     const { nombre } = req.body;
-    const sql = "INSERT INTO PROMOCIONES (nombre, estado) VALUES ( ?, ?";
+    const sql = `INSERT INTO PROMOCIONES 
+                (nombre, estado) 
+                VALUES ( ?, ?`;
     const values = [nombre, 1];
 
     connection.query(sql, values, (error, results) => {
