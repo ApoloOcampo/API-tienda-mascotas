@@ -37,6 +37,8 @@ const Especie = require('./controllers/Especie');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 // const Ventas = require('./controllers/Ventas');
+const Despacho = require('./controllers/Despacho');
+const Seguimiento = require('./controllers/Seguimiento');
 
 //metodos
 function controladores() {

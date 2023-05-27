@@ -5,7 +5,7 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
-module.exports.buscarTodosDespachos = app.get('/despachos', (req, res) => {
+module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
     const sql = `SELECT id_despacho, id_venta FROM DESPACHOS`;
     connection.query(sql, (error, results) => {
       if (error) throw error;
@@ -18,7 +18,7 @@ module.exports.buscarTodosDespachos = app.get('/despachos', (req, res) => {
   });
 
 
-  module.exports.agregarDespacho = app.post('/despachos', (req, res) => {
+  module.exports.agregarDespacho = app.post('/', (req, res) => {
     const { fecha_despacho, fecha_entrega, id_seguimiento, id_venta } = req.body;
     const sql = `INSERT INTO DESPACHOS (fecha_despacho, fecha_entrega, id_seguimiento, id_venta) VALUES (?, ?, ?, ?)`;
     const values = [fecha_despacho, fecha_entrega, id_seguimiento, id_venta];
@@ -29,7 +29,7 @@ module.exports.buscarTodosDespachos = app.get('/despachos', (req, res) => {
     });
   });
 
-  module.exports.actualizarDespacho = app.patch('/despachos/:id', (req, res) => {
+  module.exports.actualizarDespacho = app.patch('/:id', (req, res) => {
     const id_despacho = req.params.id;
     const { fecha_despacho, fecha_entrega, id_seguimiento, id_venta } = req.body;
     const sql = `UPDATE DESPACHOS SET fecha_despacho= ?, fecha_entrega = ?, id_seguimiento = ?, id_venta = ? WHERE id_despacho = ?`;
@@ -43,7 +43,7 @@ module.exports.buscarTodosDespachos = app.get('/despachos', (req, res) => {
 
   
 
-  module.exports.eliminarDespacho = app.delete('/despachos/:id', (req, res) => {
+  module.exports.eliminarDespacho = app.delete('/:id', (req, res) => {
     const id_despacho = req.params.id;
     const sql = `DELETE FROM DESPACHOS WHERE id_despacho = ?`;
     

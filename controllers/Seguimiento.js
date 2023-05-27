@@ -6,7 +6,7 @@ const app = express();
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
 
-module.exports.buscarTodosSeguimientos = app.get('/seguimientos', (req, res) => {
+module.exports.buscarTodosSeguimientos = app.get('/', (req, res) => {
   const sql = `SELECT id_seguimiento FROM SEGUIMIENTOS`;
   connection.query(sql, (error, results) => {
     if (error) throw error;
@@ -18,7 +18,7 @@ module.exports.buscarTodosSeguimientos = app.get('/seguimientos', (req, res) => 
   });
 });
 
-module.exports.agregarSeguimiento = app.post('/seguimientos', (req, res) => {
+module.exports.agregarSeguimiento = app.post('/', (req, res) => {
     const { nombre } = req.body;
     const sql = `INSERT INTO SEGUIMIENTOS (nombre) VALUES (?)`;
     const values = [nombre];
@@ -29,7 +29,7 @@ module.exports.agregarSeguimiento = app.post('/seguimientos', (req, res) => {
     });
   });
   
-  module.exports.actualizarSeguimiento = app.patch('/seguimientos/:id', (req, res) => {
+  module.exports.actualizarSeguimiento = app.patch('/:id', (req, res) => {
     const id_seguimiento = req.params.id;
     const { nombre } = req.body;
     const sql = `UPDATE SEGUIMIENTOS SET nombre = ? WHERE id_seguimiento = ?`;
@@ -41,7 +41,7 @@ module.exports.agregarSeguimiento = app.post('/seguimientos', (req, res) => {
     });
   });
   
-  module.exports.eliminarSeguimiento = app.delete('/seguimientos/:id', (req, res) => {
+  module.exports.eliminarSeguimiento = app.delete('/:id', (req, res) => {
     const id_seguimiento = req.params.id;
     const sql = `DELETE FROM SEGUIMIENTOS WHERE id_seguimiento = ?`;
     
