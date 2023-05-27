@@ -10,7 +10,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     const sql = `SELECT id_rol, 
                         nombre, 
                         estado 
-                        FROM Usuario_roles 
+                        FROM USUARIO_ROLES 
                         WHERE estado = 1`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -25,7 +25,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo patch roles
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { ID_ROL, NOMBRE, ESTADO } = req.body;
-    const sql = `UPDATE Usuario_roles 
+    const sql = `UPDATE USUARIO_ROLES 
                   SET nombre  = ?, 
                   estado = ? 
                   WHERE id_rol = ?`;
@@ -40,7 +40,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 //metodo post roles
 module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE } = req.body;
-    const sql = `INSERT INTO Usuario_roles 
+    const sql = `INSERT INTO USUARIO_ROLES 
                   (nombre, estado) 
                   VALUES ( ?, ?)`;
     const values = [NOMBRE, 1];
@@ -54,7 +54,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo delete roles
 module.exports.eliminar = app.delete('/', (request, response) => {
     const { ID_ROL } = request.body;
-    const sql = `DELETE FROM Usuario_roles 
+    const sql = `DELETE FROM USUARIO_ROLES 
                  WHERE id_rol = ?`;
     connection.query(sql, ID_ROL, (error, results) => {
       if (error) throw error;
@@ -69,7 +69,7 @@ module.exports.eliminar = app.delete('/', (request, response) => {
 //metodo put roles
 module.exports.eliminar_estado = app.put('/', (request, response) => {
     const { ID_ROL } = request.body;
-    const sql = `UPDATE Usuario_roles 
+    const sql = `UPDATE USUARIO_ROLES 
                  SET estado = 0 
                  WHERE id_rol = ?`;
     connection.query(sql, ID_ROL, (error, results) => {

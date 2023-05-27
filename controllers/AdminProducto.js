@@ -14,7 +14,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
                  imagen, 
                  promociones_id_promociones, 
                  especies_id_especies 
-                FROM Productos`;
+                FROM PRODUCTOS`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -28,7 +28,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo patch AdminProducto
 module.exports.actualizar = app.patch('/', (req, res) => {
     const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = `UPDATE Productos SET nombre = ?, 
+    const sql = `UPDATE PRODUCTOS SET nombre = ?, 
                 valor = ?, 
                 stock = ?, 
                 imagen = ?, 
@@ -46,7 +46,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 //metodo post AdminProducto
 module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = `INSERT INTO Productos ( 
+    const sql = `INSERT INTO PRODUCTOS ( 
                 nombre, 
                 valor, 
                 stock, 
@@ -65,7 +65,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo delete AdminProducto
 module.exports.eliminar = app.delete('/', (request, response) => {
     const { ID_PRODUCTOS } = request.body;
-    const sql = `DELETE FROM Productos 
+    const sql = `DELETE FROM PRODUCTOS 
                 WHERE id_productos = ?`;
     connection.query(sql, ID_PRODUCTOS, (error, results) => {
       if (error) throw error;
