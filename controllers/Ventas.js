@@ -5,7 +5,7 @@ const app = express();
 
 // Obtener todas las ventas
 module.exports.buscar_todo = app.patch('/', (request, response) => {
-    const sql = "SELECT * FROM VENTAS";
+    const sql = "SELECT id_venta, fecha, estado, hora, id_usuario FROM VENTAS";
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -18,21 +18,21 @@ module.exports.buscar_todo = app.patch('/', (request, response) => {
 
 // Actualizar una venta
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { id, fecha, estado, hora, id_usuario } = req.body;
-    const sql = "UPDATE VENTAS SET FECHA = ?, ESTADO = ?, HORA = ?, ID_USUARIO = ? WHERE ID_VENTA = ?";
-    const values = [fecha, estado, hora, id_usuario, id];
+    const { id_ventas, fecha, estado, hora, id_usuario } = req.body;
+    const sql = "UPDATE VENTAS SET fecha = ?, estado = ?, hora = ?, id_usuario = ? WHERE id_venta = ?";
+    const values = [fecha, estado, hora, id_usuario, id_ventas];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`Venta con id ${id} actualizada correctamente`);
+        res.send(`Venta con id ${id_ventas} actualizada correctamente`);
     });
 });
 
 // Agregar una nueva venta
 module.exports.agregar = app.post('/', (req, res) => {
-    const { id, fecha, estado, hora, id_usuario } = req.body;
-    const sql = "INSERT INTO VENTAS (ID_VENTA, FECHA, ESTADO, HORA, ID_USUARIO) VALUES (?, ?, ?, ?, ?)";
-    const values = [id, fecha, estado, hora, id_usuario];
+    const { id_ventas, fecha, estado, hora, id_usuario } = req.body;
+    const sql = "INSERT INTO VENTAS (id_venta, fecha, estado, hora, id_usuario) VALUES (?, ?, ?, ?, ?)";
+    const values = [id_ventas, fecha, estado, hora, id_usuario];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -42,14 +42,14 @@ module.exports.agregar = app.post('/', (req, res) => {
 
 // Eliminar una venta
 module.exports.agregar = app.delete('/', (request, response) => {
-    const { id } = request.body;
-    const sql = "DELETE FROM VENTAS WHERE ID_VENTA = ?";
-    connection.query(sql, id, (error, results) => {
+    const { id_ventas } = request.body;
+    const sql = "DELETE FROM VENTAS WHERE id_venta = ?";
+    connection.query(sql, id_ventas, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0) {
-            response.status(200).send(`Venta con id ${id} eliminada correctamente`);
+            response.status(200).send(`Venta con id ${id_ventas} eliminada correctamente`);
         } else {
-            response.status(404).send(`Venta con id ${id} no encontrada`);
+            response.status(404).send(`Venta con id ${id_ventas} no encontrada`);
         }
     });
 });

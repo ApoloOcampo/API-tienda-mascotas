@@ -6,7 +6,7 @@ const app = express();
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = "SELECT ID_PROMOCIONES, NOMBRE FROM PROMOCIONES";
+    const sql = "SELECT id_promociones, nombre FROM PROMOCIONES";
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -18,21 +18,21 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { id, nombre } = req.body;
-    const sql = "UPDATE PROMOCIONES SET NOMBRE = ? WHERE ID_PROMOCIONES = ?";
+    const { id_promociones, nombre } = req.body;
+    const sql = "UPDATE PROMOCIONES SET nombre = ? WHERE id_promociones = ?";
     const values = [nombre];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`PROMOCIONES con id ${id} actualizado correctamente`);
+        res.send(`PROMOCIONES con id ${id_promociones} actualizado correctamente`);
     });
 });
 
 //metodo post PRODUCTOS
 module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE } = req.body;
-    const sql = "INSERT INTO PROMOCIONES (NOMBRE, ESTADO) VALUES ( ?, ?";
-    const values = [NOMBRE, 1];
+    const { nombre } = req.body;
+    const sql = "INSERT INTO PROMOCIONES (nombre, estado) VALUES ( ?, ?";
+    const values = [nombre, 1];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -41,14 +41,14 @@ module.exports.agregar = app.post('/', (req, res) => {
 });
 
 module.exports.eliminar = app.put('/', (request, response) => {
-    const { id } = request.body;
-    const sql = "UPDATE PROMOCIONES WHERE ID_PROMOCIONES = ?";
-    connection.query(sql, id, (error, results) => {
+    const { id_promociones } = request.body;
+    const sql = "UPDATE PROMOCIONES WHERE id_promociones = ?";
+    connection.query(sql, id_promociones, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        response.status(200).send(`PROMOCIONES con id ${id} eliminado correctamente`);
+        response.status(200).send(`PROMOCIONES con id ${id_promociones} eliminado correctamente`);
       } else {
-        response.status(404).send(`PROMOCIONES con id ${id} no encontrado`);
+        response.status(404).send(`PROMOCIONES con id ${id_promociones} no encontrado`);
       }
     });
 });
