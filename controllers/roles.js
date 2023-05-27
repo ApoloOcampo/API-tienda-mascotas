@@ -7,7 +7,11 @@ const app = express();
 
 //metodo get roles
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = "SELECT ID_ROL, NOMBRE, ESTADO FROM USUARIO_ROLES WHERE ESTADO = 1";
+    const sql = `SELECT id_rol, 
+                        nombre, 
+                        estado 
+                        FROM Usuario_roles 
+                        WHERE estado = 1`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -21,7 +25,10 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo patch roles
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { ID_ROL, NOMBRE, ESTADO } = req.body;
-    const sql = "UPDATE USUARIO_ROLES SET NOMBRE  = ?, ESTADO = ? WHERE ID_ROL = ?";
+    const sql = `UPDATE Usuario_roles 
+                  SET nombre  = ?, 
+                  estado = ? 
+                  WHERE id_rol = ?`;
     const values = [NOMBRE,ESTADO , ID_ROL];
 
     connection.query(sql, values, (error, results) => {
@@ -33,7 +40,9 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 //metodo post roles
 module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE } = req.body;
-    const sql = "INSERT INTO USUARIO_ROLES (NOMBRE, ESTADO) VALUES ( ?, ?)";
+    const sql = `INSERT INTO Usuario_roles 
+                  (nombre, estado) 
+                  VALUES ( ?, ?)`;
     const values = [NOMBRE, 1];
 
     connection.query(sql, values, (error, results) => {
@@ -45,7 +54,8 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo delete roles
 module.exports.eliminar = app.delete('/', (request, response) => {
     const { ID_ROL } = request.body;
-    const sql = "DELETE FROM USUARIO_ROLES WHERE ID_ROL = ?";
+    const sql = `DELETE FROM Usuario_roles 
+                 WHERE id_rol = ?`;
     connection.query(sql, ID_ROL, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
@@ -59,7 +69,9 @@ module.exports.eliminar = app.delete('/', (request, response) => {
 //metodo put roles
 module.exports.eliminar_estado = app.put('/', (request, response) => {
     const { ID_ROL } = request.body;
-    const sql = "UPDATE USUARIO_ROLES SET ESTADO = 0 WHERE ID_ROL = ?";
+    const sql = `UPDATE Usuario_roles 
+                 SET estado = 0 
+                 WHERE id_rol = ?`;
     connection.query(sql, ID_ROL, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
