@@ -7,11 +7,11 @@ const app = express();
 
 //metodo get roles
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = `SELECT id_rol, 
-                        nombre, 
-                        estado 
+    const sql = `SELECT ID_ROL, 
+                        NOMBRE, 
+                        ESTADO 
                         FROM USUARIO_ROLES 
-                        WHERE estado = 1`;
+                        WHERE ESTADO = 1`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -26,9 +26,8 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { ID_ROL, NOMBRE, ESTADO } = req.body;
     const sql = `UPDATE USUARIO_ROLES 
-                  SET nombre  = ?, 
-                  estado = ? 
-                  WHERE id_rol = ?`;
+                  SET NOMBRE  = ? 
+                  WHERE ID_ROL = ?`;
     const values = [NOMBRE,ESTADO , ID_ROL];
 
     connection.query(sql, values, (error, results) => {
@@ -41,7 +40,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE } = req.body;
     const sql = `INSERT INTO USUARIO_ROLES 
-                  (nombre, estado) 
+                  (NOMBRE, ESTADO) 
                   VALUES ( ?, ?)`;
     const values = [NOMBRE, 1];
 
@@ -55,7 +54,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 module.exports.eliminar = app.delete('/', (request, response) => {
     const { ID_ROL } = request.body;
     const sql = `DELETE FROM USUARIO_ROLES 
-                 WHERE id_rol = ?`;
+                 WHERE ID_ROL = ?`;
     connection.query(sql, ID_ROL, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
@@ -70,8 +69,8 @@ module.exports.eliminar = app.delete('/', (request, response) => {
 module.exports.eliminar_estado = app.put('/', (request, response) => {
     const { ID_ROL } = request.body;
     const sql = `UPDATE USUARIO_ROLES 
-                 SET estado = 0 
-                 WHERE id_rol = ?`;
+                 SET ESTADO = 0 
+                 WHERE ID_ROL = ?`;
     connection.query(sql, ID_ROL, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {

@@ -7,13 +7,13 @@ const app = express();
 
 //metodo get AdminProducto
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = `SELECT id_productos, 
-                 nombre,
-                 valor,
-                 stock,
-                 imagen, 
-                 promociones_id_promociones, 
-                 especies_id_especies 
+    const sql = `SELECT ID_PRODUCTOS, 
+                 NOMBRE,
+                 VALOR,
+                 STOCK,
+                 IMAGEN, 
+                 PROMOCIONES_ID_PROMOCIONES, 
+                 ESPECIES_ID_ESPECIES 
                 FROM PRODUCTOS`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -28,13 +28,13 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 //metodo patch AdminProducto
 module.exports.actualizar = app.patch('/', (req, res) => {
     const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = `UPDATE PRODUCTOS SET nombre = ?, 
-                valor = ?, 
-                stock = ?, 
-                imagen = ?, 
-                promociones_id_promociones = ?, 
-                id_especie = ? 
-                WHERE id_productos = ?`;
+    const sql = `UPDATE PRODUCTOS SET NOMBRE = ?, 
+                VALOR = ?, 
+                STOCK = ?, 
+                IMAGEN = ?, 
+                PROMOCIONES_ID_PROMOCIONES = ?, 
+                ID_ESPECIE = ? 
+                WHERE ID_PRODUCTOS = ?`;
     const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES, ID_PRODUCTOS ];
 
     connection.query(sql, values, (error, results) => {
@@ -47,12 +47,12 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
     const sql = `INSERT INTO PRODUCTOS ( 
-                nombre, 
-                valor, 
-                stock, 
-                imagen, 
-                promociones_id_promociones, 
-                especies_id_especies) 
+                NOMBRE, 
+                VALOR, 
+                STOCK, 
+                IMAGEN, 
+                PROMOCIONES_ID_PROMOCIONES, 
+                ESPECIES_ID_ESPECIES) 
                 VALUES (?,?,?,?,?,?)`;
     const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES ];
 
@@ -66,7 +66,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 module.exports.eliminar = app.delete('/', (request, response) => {
     const { ID_PRODUCTOS } = request.body;
     const sql = `DELETE FROM PRODUCTOS 
-                WHERE id_productos = ?`;
+                WHERE ID_PRODUCTOS = ?`;
     connection.query(sql, ID_PRODUCTOS, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
