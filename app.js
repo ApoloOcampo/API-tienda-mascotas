@@ -90,5 +90,21 @@ function controladores() {
     app.use('/api/Seguimiento/', Seguimiento.eliminarSeguimiento);
     app.use('/api/Seguimiento/', Seguimiento.eliminar_estado_Seguimiento);
 
+        // rutas
+    //Funcion de consultar Usuarios
+    app.use('/api/usuarios/', Usuarios.agregar);
+	app.use('/api/usuarios/', Usuarios.buscar_todo);
+    app.use('/api/usuarios/', Usuarios.actualizar);
+    app.use('/api/usuarios/', Usuarios.eliminar);
+
+
+
+        // rutas
+    //Funcion de consultar ProductosVentas
+    app.use('/api/productosVentas/', ProductosVentas.agregar);
+	app.use('/api/productosVentas/', ProductosVentas.buscar_todo);
+    app.use('/api/productosVentas/', ProductosVentas.actualizar);
+    app.use('/api/productosVentas/', ProductosVentas.eliminar);
+
     
 }
