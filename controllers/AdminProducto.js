@@ -7,14 +7,21 @@ const app = express();
 
 //metodo get AdminProducto
 module.exports.buscar_todo = app.get('/', (request, response) => {  
-    const sql = `SELECT ID_PRODUCTOS, 
-                 NOMBRE,
-                 VALOR,
-                 STOCK,
-                 IMAGEN, 
-                 PROMOCIONES_ID_PROMOCIONES, 
-                 ESPECIES_ID_ESPECIES 
-                FROM PRODUCTOS`;
+    const sql = `SELECT PROD.ID_PRODUCTOS, 
+                PROD.NOMBRE,
+                PROD.VALOR,
+                PROD.STOCK,
+                PROD.IMAGEN, 
+                PROD.PROMOCIONES_ID_PROMOCIONES, 
+                PROD.ESPECIES_ID_ESPECIES,
+                ESPE.NOMBRE AS NOMBRE_ESPECIE,
+                PROM.NOMBRE AS NOMBRE_PROMOCION
+                FROM PRODUCTOS PROD
+                LEFT JOIN ESPECIES ESPE
+                    ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                LEFT JOIN PROMOCIONES PROM
+                    ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                    WHERE PROD.ESTADO = 1`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -48,13 +55,14 @@ module.exports.agregar = app.post('/', (req, res) => {
     const { NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
     const sql = `INSERT INTO PRODUCTOS ( 
                 NOMBRE, 
-                VALOR, 
-                STOCK, 
-                IMAGEN, 
-                PROMOCIONES_ID_PROMOCIONES, 
-                ESPECIES_ID_ESPECIES) 
-                VALUES (?,?,?,?,?,?)`;
-    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES ];
+                VALOR,
+                STOCK,
+                IMAGEN,
+                ESTADO,
+                ID_PROMOCIONES, 
+                ID_ESPECIES) 
+                VALUES (?,?,?,?,?,?,?)`;
+    const values = [ NOMBRE, VALOR, STOCK, IMAGEN,1, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
