@@ -40,7 +40,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
                 STOCK = ?, 
                 IMAGEN = ?, 
                 PROMOCIONES_ID_PROMOCIONES = ?, 
-                ID_ESPECIE = ? 
+                ESPECIES_ID_ESPECIES = ? 
                 WHERE ID_PRODUCTOS = ?`;
     const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES, ID_PRODUCTOS ];
 
@@ -52,17 +52,17 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 
 //metodo post AdminProducto
 module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
+    const { NOMBRE, VALOR, STOCK, IMAGEN, ESTADO, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES } = req.body;
     const sql = `INSERT INTO PRODUCTOS ( 
                 NOMBRE, 
                 VALOR,
                 STOCK,
                 IMAGEN,
                 ESTADO,
-                ID_PROMOCIONES, 
-                ID_ESPECIES) 
+                ESPECIES_ID_ESPECIES,
+                PROMOCIONES_ID_PROMOCIONES) 
                 VALUES (?,?,?,?,?,?,?)`;
-    const values = [ NOMBRE, VALOR, STOCK, IMAGEN,1, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES ];
+    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, 1, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;

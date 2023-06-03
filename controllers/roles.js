@@ -24,11 +24,11 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 
 //metodo patch roles
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { ID_ROL, NOMBRE, ESTADO } = req.body;
+    const { ID_ROL, NOMBRE } = req.body;
     const sql = `UPDATE USUARIO_ROLES 
                   SET NOMBRE  = ? 
                   WHERE ID_ROL = ?`;
-    const values = [NOMBRE,ESTADO , ID_ROL];
+    const values = [NOMBRE, ID_ROL];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
