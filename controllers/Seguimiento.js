@@ -7,7 +7,8 @@ const app = express();
 
 
 module.exports.buscarTodosSeguimientos = app.get('/', (req, res) => {
-  const sql = `SELECT id_seguimiento FROM SEGUIMIENTOS`;
+  const sql = `SELECT id_seguimiento
+               FROM SEGUIMIENTOS`;
   connection.query(sql, (error, results) => {
     if (error) throw error;
     if (results.length > 0) {
@@ -20,7 +21,8 @@ module.exports.buscarTodosSeguimientos = app.get('/', (req, res) => {
 
 module.exports.agregarSeguimiento = app.post('/', (req, res) => {
     const { nombre } = req.body;
-    const sql = `INSERT INTO SEGUIMIENTOS (nombre) VALUES (?)`;
+    const sql = `INSERT INTO SEGUIMIENTOS 
+                (nombre) VALUES (?)`;
     const values = [nombre];
   
     connection.query(sql, values, (error, results) => {
@@ -32,7 +34,8 @@ module.exports.agregarSeguimiento = app.post('/', (req, res) => {
   module.exports.actualizarSeguimiento = app.patch('/:id', (req, res) => {
     const id_seguimiento = req.params.id;
     const { nombre } = req.body;
-    const sql = `UPDATE SEGUIMIENTOS SET nombre = ? WHERE id_seguimiento = ?`;
+    const sql = `UPDATE SEGUIMIENTOS SET nombre = ? 
+                WHERE id_seguimiento = ?`;
     const values = [nombre, id_seguimiento];
   
     connection.query(sql, values, (error, results) => {
@@ -43,8 +46,8 @@ module.exports.agregarSeguimiento = app.post('/', (req, res) => {
   
   module.exports.eliminarSeguimiento = app.delete('/:id', (req, res) => {
     const id_seguimiento = req.params.id;
-    const sql = `DELETE FROM SEGUIMIENTOS WHERE id_seguimiento = ?`;
-    
+    const sql = `DELETE FROM SEGUIMIENTOS 
+                WHERE id_seguimiento = ?`;
     connection.query(sql, id_seguimiento, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
@@ -57,7 +60,8 @@ module.exports.agregarSeguimiento = app.post('/', (req, res) => {
 
   module.exports.eliminar_estado_Seguimiento = app.put('/', (request, response) => {
     const { id_seguimiento } = request.body;
-    const sql = "UPDATE SEGUIMIENTOS SET ESTADO = 0 WHERE id_seguimiento = ?";
+    const sql = `UPDATE SEGUIMIENTOS SET ESTADO = 0
+                 WHERE id_seguimiento = ?`;
     connection.query(sql, id_seguimiento, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
