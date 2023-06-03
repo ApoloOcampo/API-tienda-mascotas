@@ -49,8 +49,10 @@ module.exports.agregar = app.post('/', (req, res) => {
 
 module.exports.eliminar = app.put('/', (request, response) => {
     const { id_promociones } = request.body;
-    const sql = "UPDATE PROMOCIONES WHERE id_promociones = ?";
-    connection.query(sql, id_promociones, (error, results) => {
+    const sql = `UPDATE PROMOCIONES 
+                SET ESTADO = 0 
+                WHERE id_promociones = ?`;
+        connection.query(sql, id_promociones, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
         response.status(200).send(`PROMOCIONES con id ${id_promociones} eliminado correctamente`);

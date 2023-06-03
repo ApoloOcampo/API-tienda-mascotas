@@ -54,7 +54,9 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo PUT ESPECIES
 module.exports.eliminar = app.put('/', (request, response) => {
     const { id_especies } = request.body;
-    const sql = "UPDATE ESPECIES WHERE id_especies = ?";
+    const sql = `UPDATE ESPECIES 
+                SET ESTADO = 0 
+                WHERE id_especies = ?`;
     connection.query(sql, id_especies, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {

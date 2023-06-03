@@ -72,7 +72,8 @@ module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
   
   module.exports.eliminar_estado_Despacho = app.put('/', (request, response) => {
     const { id_despacho } = request.body;
-    const sql = `UPDATE DESPACHOS SET ESTADO = 0
+    const sql = `UPDATE DESPACHOS
+                 SET ESTADO = 0
                  WHERE id_despacho = ?`;
     connection.query(sql, id_despacho, (error, results) => {
       if (error) throw error;

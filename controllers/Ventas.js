@@ -58,10 +58,11 @@ module.exports.agregar = app.post('/', (req, res) => {
 });
 
 // Eliminar una venta
-module.exports.agregar = app.delete('/', (request, response) => {
+module.exports.agregar = app.put('/', (request, response) => {
     const { id_ventas } = request.body;
-    const sql = `DELETE FROM VENTAS 
-                        WHERE id_venta = ?`;
+    const sql = `UPDATE FROM VENTAS 
+                SET ESTADO = 0 
+                WHERE id_venta = ?`;
     connection.query(sql, id_ventas, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0) {

@@ -60,7 +60,8 @@ module.exports.agregarSeguimiento = app.post('/', (req, res) => {
 
   module.exports.eliminar_estado_Seguimiento = app.put('/', (request, response) => {
     const { id_seguimiento } = request.body;
-    const sql = `UPDATE SEGUIMIENTOS SET ESTADO = 0
+    const sql = `UPDATE SEGUIMIENTOS 
+                 SET ESTADO = 0
                  WHERE id_seguimiento = ?`;
     connection.query(sql, id_seguimiento, (error, results) => {
       if (error) throw error;
