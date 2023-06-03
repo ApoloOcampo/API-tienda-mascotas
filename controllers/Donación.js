@@ -4,8 +4,12 @@ const connection = require('../config/config');
 const app = express();
 
 // Obtener todas las donaciones
-app.get('/', (request, response) => {
-    const sql = "SELECT * FROM DONACIONES";
+module.exports.buscar_todo = app.patch('/', (request, response) => {
+    const sql = `SELECT 
+                id_donacion,
+                fecha, monto,
+                id_usuario 
+                FROM DONACIONES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -17,22 +21,30 @@ app.get('/', (request, response) => {
 });
 
 // Actualizar una donación
-app.patch('/', (req, res) => {
-    const { id, fecha, monto, id_usuario } = req.body;
-    const sql = "UPDATE DONACIONES SET FECHA = ?, MONTO = ?, ID_USUARIO = ? WHERE ID_DONACION = ?";
-    const values = [fecha, monto, id_usuario, id];
+module.exports.actualizar = app.patch('/', (req, res) => {
+    const { id_donacion, fecha, monto, id_usuario } = req.body;
+    const sql = `UPDATE DONACIONES SET 
+                        fecha = ?,
+                        monto = ?,
+                        id_usuario = ? 
+                        WHERE id_donacion = ?`;
+    const values = [fecha, monto, id_usuario, id_donacion];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`Donación con id ${id} actualizada correctamente`);
+        res.send(`Donación con id_donacion ${id_donacion} actualizada correctamente`);
     });
 });
 
 // Agregar una nueva donación
-app.post('/', (req, res) => {
-    const { id, fecha, monto, id_usuario } = req.body;
-    const sql = "INSERT INTO DONACIONES (ID_DONACION, FECHA, MONTO, ID_USUARIO) VALUES (?, ?, ?, ?)";
-    const values = [id, fecha, monto, id_usuario];
+module.exports.agregar = app.post('/', (req, res) => {
+    const { id_donacion, fecha, monto, id_usuario } = req.body;
+    const sql = `INSERT INTO DONACIONES (
+                        id_donacion, 
+                        fecha, monto, 
+                        id_usuario) 
+                        VALUES (?, ?, ?, ?)`;
+    const values = [id_donacion, fecha, monto, id_usuario];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -41,15 +53,15 @@ app.post('/', (req, res) => {
 });
 
 // Eliminar una donación
-app.put('/', (request, response) => {
-    const { id } = request.body;
-    const sql = "DELETE FROM DONACIONES WHERE ID_DONACION = ?";
-    connection.query(sql, id, (error, results) => {
+module.exports.agregar = app.delete('/', (request, response) => {
+    const { id_donacion } = request.body;
+    const sql = "DELETE FROM DONACIONES WHERE id_donacion = ?";
+    connection.query(sql, id_donacion, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0) {
-            response.status(200).send(`Donación con id ${id} eliminada correctamente`);
+            response.status(200).send(`Donación con id ${id_donacion} eliminada correctamente`);
         } else {
-            response.status(404).send(`Donación con id ${id} no encontrada`);
+            response.status(404).send(`Donación con id ${id_donacion} no encontrada`);
         }
     });
 });

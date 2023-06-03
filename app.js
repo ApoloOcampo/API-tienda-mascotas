@@ -37,6 +37,8 @@ const Especie = require('./controllers/Especie');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 // const Ventas = require('./controllers/Ventas');
+const Despacho = require('./controllers/Despacho');
+const Seguimiento = require('./controllers/Seguimiento');
 
 //metodos
 function controladores() {
@@ -72,4 +74,21 @@ function controladores() {
     app.use('/api/Promociones/', Promociones.eliminar);
 
 
+            // rutas
+    //Funcion de consultar Despacho
+    app.use('/api/Despacho/', Despacho.agregarDespacho);
+	app.use('/api/Despacho/', Despacho.buscarTodosDespachos);
+    app.use('/api/Despacho/', Despacho.actualizarDespacho);
+    app.use('/api/Despacho/', Despacho.eliminarDespacho);
+    app.use('/api/Despacho/', Despacho.eliminar_estado_Despacho);
+
+            // rutas
+    //Funcion de consultar Seguimiento
+    app.use('/api/Seguimiento/', Seguimiento.agregarSeguimiento);
+	app.use('/api/Seguimiento/', Seguimiento.buscarTodosSeguimientos);
+    app.use('/api/Seguimiento/', Seguimiento.actualizarSeguimiento);
+    app.use('/api/Seguimiento/', Seguimiento.eliminarSeguimiento);
+    app.use('/api/Seguimiento/', Seguimiento.eliminar_estado_Seguimiento);
+
+    
 }

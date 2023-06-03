@@ -6,8 +6,12 @@ const app = express();
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
 //metodo GET ESPECIES
-module.exports.buscar_todoEspecies = app.get('/', (request, response) => {  
-    const sql = "SELECT ID_ESPECIES, NOMBRE, ESTADO FROM ESPECIES";
+module.exports.buscar_todo = app.get('/', (request, response) => {  
+    const sql = `SELECT
+                id_especies,
+                nombre, 
+                estado 
+                FROM ESPECIES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -19,22 +23,26 @@ module.exports.buscar_todoEspecies = app.get('/', (request, response) => {
 });
 
 //metodo PATCH ESPECIES
-module.exports.actualizarEspecies = app.patch('/', (req, res) => {
-    const { ID_ESPECIES, NOMBRE } = req.body;
-    const sql = "UPDATE ESPECIES SET NOMBRE = ? WHERE ID_ESPECIES = ?";
-    const values = [NOMBRE];
+module.exports.actualizar = app.patch('/', (req, res) => {
+    const { id_especies, nombre } = req.body;
+    const sql = `UPDATE ESPECIES SET 
+                        nombre = ?
+                        WHERE id_especies = `;
+    const values = [nombre];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`ESPECIES con id ${ID_ESPECIES} actualizado correctamente`);
+        res.send(`ESPECIES con id ${id_especies} actualizado correctamente`);
     });
 });
 
 //metodo post ESPECIES
 module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE } = req.body;
-    const sql = "INSERT INTO ESPECIES (NOMBRE, ESTADO) VALUES (?, ?)";
-    const values = [NOMBRE, 1];
+    const { nombre } = req.body;
+    const sql = `INSERT INTO ESPECIES
+                        (nombre, estado)
+                        VALUES (?, ?)`;
+    const values = [nombre, 1];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -45,14 +53,14 @@ module.exports.agregar = app.post('/', (req, res) => {
 
 //metodo PUT ESPECIES
 module.exports.eliminar = app.put('/', (request, response) => {
-    const { ID_ESPECIES } = request.body;
-    const sql = "UPDATE ESPECIES WHERE ID_ESPECIES = ?";
-    connection.query(sql, ID_ESPECIES, (error, results) => {
+    const { id_especies } = request.body;
+    const sql = "UPDATE ESPECIES WHERE id_especies = ?";
+    connection.query(sql, id_especies, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        response.status(200).send(`ESPECIES con id ${ID_ESPECIES} eliminado correctamente`);
+        response.status(200).send(`ESPECIES con id ${id_especies} eliminado correctamente`);
       } else {
-        response.status(404).send(`ESPECIES con id ${ID_ESPECIES} no encontrado`);
+        response.status(404).send(`ESPECIES con id ${id_especies} no encontrado`);
       }
     });
 });
