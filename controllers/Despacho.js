@@ -19,7 +19,10 @@ module.exports.agregarDespacho = app.post('/', (req, res) => {
 
 
 module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
-    const sql = `SELECT id_despacho, id_venta FROM DESPACHOS`;
+    const sql = `SELECT
+                ID_DESPACHO, 
+                ID_VENTA 
+                FROM DESPACHOS`;
     connection.query(sql, (error, results) => {
       if (error) throw error;
       if (results.length > 0) {
@@ -31,43 +34,60 @@ module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
   });
 
 
-  module.exports.actualizarDespacho = app.patch('/:id', (req, res) => {
-    const id_despacho = req.params.id;
+  module.exports.agregarDespacho = app.post('/', (req, res) => {
     const { fecha_despacho, fecha_entrega, id_seguimiento, id_venta } = req.body;
-    const sql = `UPDATE DESPACHOS SET fecha_despacho= ?, fecha_entrega = ?, id_seguimiento = ?, id_venta = ? WHERE id_despacho = ?`;
-    const values = [fecha_despacho, fecha_entrega, id_seguimiento, id_venta, id_despacho];
+    const sql = `INSERT INTO DESPACHOS (fecha_despacho, fecha_entrega, id_seguimiento, id_venta) VALUES (?, ?, ?, ?)`;
+    const values = [fecha_despacho, fecha_entrega, id_seguimiento, id_venta];
   
     connection.query(sql, values, (error, results) => {
       if (error) throw error;
-      res.send(`Despacho con ID ${id_despacho} actualizado correctamente`);
+      res.status(200).send('Despacho agregado exitosamente');
+    });
+  });
+
+  module.exports.actualizarDespacho = app.patch('/:id', (req, res) => {
+    const ID_DESPACHO = req.params.id;
+    const { FECHA_DESPACHO, FECHA_ENTREGA, ID_SEGUIMIENTO, ID_VENTA } = req.body;
+    const sql = `UPDATE DESPACHOS SET 
+                FECHA_DESPACHO= ?, 
+                FECHA_ENTREGA = ?, 
+                ID_SEGUIMIENTO = ?, 
+                ID_VENTA = ?
+                WHERE ID_DESPACHO = ?`;
+    const values = [FECHA_DESPACHO, FECHA_ENTREGA, ID_SEGUIMIENTO, ID_VENTA, ID_DESPACHO];
+  
+    connection.query(sql, values, (error, results) => {
+      if (error) throw error;
+      res.send(`Despacho con ID ${ID_DESPACHO} actualizado correctamente`);
     });
   });
 
   
 
   module.exports.eliminarDespacho = app.delete('/:id', (req, res) => {
-    const id_despacho = req.params.id;
-    const sql = `DELETE FROM DESPACHOS WHERE id_despacho = ?`;
-    
-    connection.query(sql, id_despacho, (error, results) => {
+    const ID_DESPACHO = req.params.id;
+    const sql = `DELETE FROM DESPACHOS
+                 WHERE ID_DESPACHO = ?`;
+    connection.query(sql, ID_DESPACHO, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        res.status(200).send(`Despacho con ID ${id_despacho} eliminado correctamente`);
+        res.status(200).send(`Despacho con ID ${ID_DESPACHO} eliminado correctamente`);
       } else {
-        res.status(404).send(`Despacho con ID ${id_despacho} no encontrado`);
+        res.status(404).send(`Despacho con ID ${ID_DESPACHO} no encontrado`);
       }
     });
   });
   
   module.exports.eliminar_estado_Despacho = app.put('/', (request, response) => {
-    const { id_despacho } = request.body;
-    const sql = "UPDATE DESPACHOS SET ESTADO = 0 WHERE id_despacho = ?";
-    connection.query(sql, id_despacho, (error, results) => {
+    const { ID_DESPACHO } = request.body;
+    const sql = `UPDATE DESPACHOS SET ESTADO = 0
+                 WHERE ID_DESPACHO = ?`;
+    connection.query(sql, ID_DESPACHO, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        response.status(200).send(`Despacho con ID ${id_despacho} eliminado correctamente`);
+        response.status(200).send(`Despacho con ID ${ID_DESPACHO} eliminado correctamente`);
       } else {
-        response.status(404).send(`Despacho con ID ${id_despacho} no encontrado`);
+        response.status(404).send(`Despacho con ID ${ID_DESPACHO} no encontrado`);
       }
     });
 });

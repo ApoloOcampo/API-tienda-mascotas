@@ -56,9 +56,15 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 
 
 // Eliminar una donación
+<<<<<<< HEAD
 module.exports.eliminar = app.delete('/', (request, response) => {
+=======
+module.exports.agregar = app.put('/', (request, response) => {
+>>>>>>> 74530fbaf49f3d94f3782c7ef6d85ba2c6a1e7bc
     const { id_donacion } = request.body;
-    const sql = "DELETE FROM DONACIONES WHERE id_donacion = ?";
+    const sql = `UPDATE FROM DONACIONES
+                SET ESTADO = 0  
+                WHERE id_donacion = ?`;
     connection.query(sql, id_donacion, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0) {
