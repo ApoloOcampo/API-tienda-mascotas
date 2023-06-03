@@ -55,7 +55,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 // Eliminar una donación
 module.exports.agregar = app.put('/', (request, response) => {
     const { id_donacion } = request.body;
-    const sql = `DELETE FROM DONACIONES
+    const sql = `UPDATE FROM DONACIONES
                 SET ESTADO = 0  
                 WHERE id_donacion = ?`;
     connection.query(sql, id_donacion, (error, results) => {
