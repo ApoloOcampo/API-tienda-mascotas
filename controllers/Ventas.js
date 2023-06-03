@@ -53,11 +53,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     });
 });
 
-<<<<<<< HEAD
-
-// Eliminar una venta
-module.exports.eliminar = app.delete('/', (request, response) => {
-=======
 // Agregar una nueva venta
 module.exports.agregar = app.post('/', (req, res) => {
     const { id_ventas, fecha, estado, hora, id_usuario } = req.body;
@@ -77,8 +72,7 @@ module.exports.agregar = app.post('/', (req, res) => {
 });
 
 // Eliminar una venta
-module.exports.agregar = app.put('/', (request, response) => {
->>>>>>> 74530fbaf49f3d94f3782c7ef6d85ba2c6a1e7bc
+module.exports.eliminar = app.delete('/', (request, response) => {
     const { id_ventas } = request.body;
     const sql = `UPDATE FROM VENTAS 
                 SET ESTADO = 0 
