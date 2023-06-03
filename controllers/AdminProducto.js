@@ -5,6 +5,28 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+
+//metodo post AdminProducto
+module.exports.agregar = app.post('/', (req, res) => {
+    const { NOMBRE, VALOR, STOCK, IMAGEN, ESTADO, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES } = req.body;
+    const sql = `INSERT INTO PRODUCTOS ( 
+                NOMBRE, 
+                VALOR,
+                STOCK,
+                IMAGEN,
+                ESTADO,
+                ESPECIES_ID_ESPECIES,
+                PROMOCIONES_ID_PROMOCIONES) 
+                VALUES (?,?,?,?,?,?,?)`;
+    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, 1, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES ];
+
+    connection.query(sql, values, (error, results) => {
+        if (error) throw error;
+        res.status(200).send('PRODUCTOS agregado exitosamente');
+    });
+});
+
+
 //metodo get AdminProducto
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT PROD.ID_PRODUCTOS, 
@@ -32,6 +54,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
+
 //metodo patch AdminProducto
 module.exports.actualizar = app.patch('/', (req, res) => {
     const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
@@ -50,25 +73,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     });
 });
 
-//metodo post AdminProducto
-module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE, VALOR, STOCK, IMAGEN, ESTADO, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES } = req.body;
-    const sql = `INSERT INTO PRODUCTOS ( 
-                NOMBRE, 
-                VALOR,
-                STOCK,
-                IMAGEN,
-                ESTADO,
-                ESPECIES_ID_ESPECIES,
-                PROMOCIONES_ID_PROMOCIONES) 
-                VALUES (?,?,?,?,?,?,?)`;
-    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, 1, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES ];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.status(200).send('PRODUCTOS agregado exitosamente');
-    });
-});
 
 //metodo delete AdminProducto
 module.exports.eliminar = app.delete('/', (request, response) => {

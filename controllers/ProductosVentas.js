@@ -5,6 +5,28 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+//metodo post producrtosventa
+module.exports.agregar = app.post('/', (req, res) => {
+    const { valor_totalventa, estado, productos_id_productos, ventas_id_venta, id_productosventas} = req.body;
+    const sql = 
+    `INSERT 
+    INTO PRODUCTOSVENTAS 
+        (VALOR_TOTALVENTA, 
+        ESTADO, 
+        PRODUCTOS_ID_PRODUCTOS, 
+        VENTAS_ID_VENTA, 
+        ID_PRODUCTOSVENTAS) 
+    VALUES 
+    (?, ?, ?, ?, ?)`;
+    const values = [valor_totalventa, estado, productos_id_productos, ventas_id_venta, id_productosventas,  1];
+
+    connection.query(sql, values, (error, results) => {
+        if (error) throw error;
+        res.status(200).send('Venta del producto  agregado exitosamente');
+    });
+});
+
+
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = 
     `SELECT
@@ -27,26 +49,6 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
-//metodo post producrtosventa
-module.exports.agregar = app.post('/', (req, res) => {
-    const { valor_totalventa, estado, productos_id_productos, ventas_id_venta, id_productosventas} = req.body;
-    const sql = 
-    `INSERT 
-    INTO PRODUCTOSVENTAS 
-        (VALOR_TOTALVENTA, 
-        ESTADO, 
-        PRODUCTOS_ID_PRODUCTOS, 
-        VENTAS_ID_VENTA, 
-        ID_PRODUCTOSVENTAS) 
-    VALUES 
-    (?, ?, ?, ?, ?)`;
-    const values = [valor_totalventa, estado, productos_id_productos, ventas_id_venta, id_productosventas,  1];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.status(200).send('Venta del producto  agregado exitosamente');
-    });
-});
 
 module.exports.actualizar = app.patch('/', (req, res) => {
     //const id_productosventas = req.params.id
@@ -67,7 +69,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
         res.send(`Venta de productos con id ${id} actualizado correctamente`);
     });
 });
-
 
 
 module.exports.eliminar = app.put('/', (request, response) => {

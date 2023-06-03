@@ -5,6 +5,32 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+//metodo post roles
+module.exports.agregar = app.post('/', (req, res) => {
+    const { rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios } = req.body;
+    const sql = 
+    `INSERT 
+        INTO USUARIOS 
+        (RUT, 
+        DV, 
+        NOMBRE, 
+        AP_PATERNO, 
+        AP_MATERNO, 
+        ESTA_SUSCRITO, 
+        ESTADO, 
+        USUARIO_ROLES_ID_ROL, 
+        ID_USUARIO) 
+    VALUES 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios, 1];
+
+    connection.query(sql, values, (error, res) => {
+        if (error) throw error;
+        res.status(200).send('Usuario agregado exitosamente');
+    });
+});
+
+
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = 
     `SELECT
@@ -32,32 +58,6 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 
-//metodo post roles
-module.exports.agregar = app.post('/', (req, res) => {
-    const { rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios } = req.body;
-    const sql = 
-    `INSERT 
-        INTO USUARIOS 
-        (RUT, 
-        DV, 
-        NOMBRE, 
-        AP_PATERNO, 
-        AP_MATERNO, 
-        ESTA_SUSCRITO, 
-        ESTADO, 
-        USUARIO_ROLES_ID_ROL, 
-        ID_USUARIO) 
-    VALUES 
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios, 1];
-
-    connection.query(sql, values, (error, res) => {
-        if (error) throw error;
-        res.status(200).send('Usuario agregado exitosamente');
-    });
-});
-
-
 module.exports.actualizar = app.patch('/', (req, res) => {
     const id_usuario = req.params.id
     const { id, rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios } = req.body;
@@ -69,7 +69,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
         res.send(`Usuario con id ${id} actualizado correctamente`);
     });
 });
-
 
 
 module.exports.eliminar = app.put('/', (request, response) => {

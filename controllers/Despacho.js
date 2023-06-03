@@ -5,6 +5,19 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+
+module.exports.agregarDespacho = app.post('/', (req, res) => {
+  const { fecha_despacho, fecha_entrega, id_seguimiento, id_venta } = req.body;
+  const sql = `INSERT INTO DESPACHOS (fecha_despacho, fecha_entrega, id_seguimiento, id_venta) VALUES (?, ?, ?, ?)`;
+  const values = [fecha_despacho, fecha_entrega, id_seguimiento, id_venta];
+
+  connection.query(sql, values, (error, results) => {
+    if (error) throw error;
+    res.status(200).send('Despacho agregado exitosamente');
+  });
+});
+
+
 module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
     const sql = `SELECT id_despacho, id_venta FROM DESPACHOS`;
     connection.query(sql, (error, results) => {
@@ -17,17 +30,6 @@ module.exports.buscarTodosDespachos = app.get('/', (req, res) => {
     });
   });
 
-
-  module.exports.agregarDespacho = app.post('/', (req, res) => {
-    const { fecha_despacho, fecha_entrega, id_seguimiento, id_venta } = req.body;
-    const sql = `INSERT INTO DESPACHOS (fecha_despacho, fecha_entrega, id_seguimiento, id_venta) VALUES (?, ?, ?, ?)`;
-    const values = [fecha_despacho, fecha_entrega, id_seguimiento, id_venta];
-  
-    connection.query(sql, values, (error, results) => {
-      if (error) throw error;
-      res.status(200).send('Despacho agregado exitosamente');
-    });
-  });
 
   module.exports.actualizarDespacho = app.patch('/:id', (req, res) => {
     const id_despacho = req.params.id;

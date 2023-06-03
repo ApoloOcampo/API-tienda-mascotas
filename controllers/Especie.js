@@ -5,6 +5,21 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+//metodo post ESPECIES
+module.exports.agregar = app.post('/', (req, res) => {
+    const { nombre } = req.body;
+    const sql = `INSERT INTO ESPECIES
+                        (nombre, estado)
+                        VALUES (?, ?)`;
+    const values = [nombre, 1];
+
+    connection.query(sql, values, (error, results) => {
+        if (error) throw error;
+        res.status(200).send('ESPECIE agregado exitosamente');
+    });
+});
+
+
 //metodo GET ESPECIES
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT
@@ -22,6 +37,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
+
 //metodo PATCH ESPECIES
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { id_especies, nombre } = req.body;
@@ -33,20 +49,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
         res.send(`ESPECIES con id ${id_especies} actualizado correctamente`);
-    });
-});
-
-//metodo post ESPECIES
-module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
-    const sql = `INSERT INTO ESPECIES
-                        (nombre, estado)
-                        VALUES (?, ?)`;
-    const values = [nombre, 1];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.status(200).send('ESPECIE agregado exitosamente');
     });
 });
 
