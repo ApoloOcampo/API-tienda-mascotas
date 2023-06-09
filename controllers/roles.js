@@ -5,6 +5,21 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+//metodo post roles
+module.exports.agregar = app.post('/', (req, res) => {
+  const { NOMBRE } = req.body;
+  const sql = `INSERT INTO USUARIO_ROLES 
+                (NOMBRE, ESTADO) 
+                VALUES ( ?, ?)`;
+  const values = [NOMBRE, 1];
+
+  connection.query(sql, values, (error, results) => {
+      if (error) throw error;
+      res.status(200).send('Rol agregado exitosamente');
+  });
+});
+
+
 //metodo get roles
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT ID_ROL, 
@@ -22,6 +37,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
+
 //metodo patch roles
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { ID_ROL, NOMBRE } = req.body;
@@ -36,19 +52,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     });
 });
 
-//metodo post roles
-module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE } = req.body;
-    const sql = `INSERT INTO USUARIO_ROLES 
-                  (NOMBRE, ESTADO) 
-                  VALUES ( ?, ?)`;
-    const values = [NOMBRE, 1];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.status(200).send('Rol agregado exitosamente');
-    });
-});
 
 //metodo delete roles
 module.exports.eliminar = app.delete('/', (request, response) => {

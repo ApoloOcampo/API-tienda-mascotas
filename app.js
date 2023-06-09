@@ -15,8 +15,8 @@ const connection = require('./config/config');
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE, PATCH');
     next();
 });
 
@@ -32,17 +32,20 @@ app.listen(port, function (){
 });
 
 const AdminProducto = require('./controllers/AdminProducto');
-// const Donación = require('./controllers/Donación');
+const Despacho = require('./controllers/Despacho');
+const Donacion = require('./controllers/Donacion');
 const Especie = require('./controllers/Especie');
+const ProductosVentas = require('./controllers/ProductosVentas');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
-// const Ventas = require('./controllers/Ventas');
-const Despacho = require('./controllers/Despacho');
 const Seguimiento = require('./controllers/Seguimiento');
+const Usuarios = require('./controllers/Usuarios');
+const Ventas = require('./controllers/Ventas');
+
 
 //metodos
 function controladores() {
-    // rutas
+    // // rutas
     //Funcion de consultar AdminProducto
     app.use('/api/AdminProducto/', AdminProducto.agregar);
 	app.use('/api/AdminProducto/', AdminProducto.buscar_todo);
@@ -50,31 +53,6 @@ function controladores() {
     app.use('/api/AdminProducto/', AdminProducto.eliminar);
 
 
-        // rutas
-    //Funcion de consultar Especie
-    app.use('/api/Especie/', Especie.agregar);
-	app.use('/api/Especie/', Especie.buscar_todoEspecies);
-    app.use('/api/Especie/', Especie.actualizarEspecies);
-    app.use('/api/Especie/', Especie.eliminar);
-
-
-        // rutas
-    //Funcion de consultar roles
-    app.use('/api/roles/', roles.agregar);
-	app.use('/api/roles/', roles.buscar_todo);
-    app.use('/api/roles/', roles.actualizar);
-    app.use('/api/roles/', roles.eliminar);
-    app.use('/api/roles/', roles.eliminar_estado);
-
-            // rutas
-    //Funcion de consultar Promociones
-    app.use('/api/Promociones/', Promociones.agregar);
-	app.use('/api/Promociones/', Promociones.buscar_todo);
-    app.use('/api/Promociones/', Promociones.actualizar);
-    app.use('/api/Promociones/', Promociones.eliminar);
-
-
-            // rutas
     //Funcion de consultar Despacho
     app.use('/api/Despacho/', Despacho.agregarDespacho);
 	app.use('/api/Despacho/', Despacho.buscarTodosDespachos);
@@ -82,29 +60,63 @@ function controladores() {
     app.use('/api/Despacho/', Despacho.eliminarDespacho);
     app.use('/api/Despacho/', Despacho.eliminar_estado_Despacho);
 
-            // rutas
-    //Funcion de consultar Seguimiento
+    
+    // //Funcion de consultar Donacion
+    app.use('/api/Donacion/', Donacion.agregar);
+	app.use('/api/Donacion/', Donacion.buscar_todo);
+    app.use('/api/Donacion/', Donacion.actualizar);
+    app.use('/api/Donacion/', Donacion.eliminar);
+
+
+    // //Funcion de consultar Especie
+    app.use('/api/Especie/', Especie.agregar);
+	app.use('/api/Especie/', Especie.buscar_todo);
+    app.use('/api/Especie/', Especie.actualizar);
+    app.use('/api/Especie/', Especie.eliminar);
+
+
+    // //Funcion de consultar ProductosVentas
+    app.use('/api/ProductosVentas/', ProductosVentas.agregar);
+	app.use('/api/ProductosVentas/', ProductosVentas.buscar_todo);
+    app.use('/api/ProductosVentas/', ProductosVentas.actualizar);
+    app.use('/api/ProductosVentas/', ProductosVentas.eliminar);
+
+
+    // //Funcion de consultar Promociones
+    app.use('/api/Promociones/', Promociones.agregar);
+	app.use('/api/Promociones/', Promociones.buscar_todo);
+    app.use('/api/Promociones/', Promociones.actualizar);
+    app.use('/api/Promociones/', Promociones.eliminar);
+
+
+    //Funcion de consultar roles
+    app.use('/api/roles/', roles.agregar);
+	app.use('/api/roles/', roles.buscar_todo);
+    app.use('/api/roles/', roles.actualizar);
+    app.use('/api/roles/', roles.eliminar);
+    app.use('/api/roles/', roles.eliminar_estado);
+
+
+    // //Funcion de consultar Seguimiento
     app.use('/api/Seguimiento/', Seguimiento.agregarSeguimiento);
 	app.use('/api/Seguimiento/', Seguimiento.buscarTodosSeguimientos);
     app.use('/api/Seguimiento/', Seguimiento.actualizarSeguimiento);
     app.use('/api/Seguimiento/', Seguimiento.eliminarSeguimiento);
     app.use('/api/Seguimiento/', Seguimiento.eliminar_estado_Seguimiento);
 
-        // rutas
-    //Funcion de consultar Usuarios
+
+    // //Funcion de consultar Usuarios
     app.use('/api/usuarios/', Usuarios.agregar);
 	app.use('/api/usuarios/', Usuarios.buscar_todo);
     app.use('/api/usuarios/', Usuarios.actualizar);
     app.use('/api/usuarios/', Usuarios.eliminar);
 
 
-
-        // rutas
-    //Funcion de consultar ProductosVentas
-    app.use('/api/productosVentas/', ProductosVentas.agregar);
-	app.use('/api/productosVentas/', ProductosVentas.buscar_todo);
-    app.use('/api/productosVentas/', ProductosVentas.actualizar);
-    app.use('/api/productosVentas/', ProductosVentas.eliminar);
+    // //Funcion de consultar Ventas
+    app.use('/api/Ventas/', Ventas.agregar);
+	app.use('/api/Ventas/', Ventas.buscar_todo);
+    app.use('/api/Ventas/', Ventas.actualizar);
+    app.use('/api/Ventas/', Ventas.eliminar);
 
     
 }

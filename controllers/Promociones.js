@@ -5,6 +5,22 @@ const app = express();
 
 //http://estilow3b.com/metodos-http-post-get-put-delete/
 
+
+//metodo post PRODUCTOS
+module.exports.agregar = app.post('/', (req, res) => {
+    const { nombre } = req.body;
+    const sql = `INSERT INTO PROMOCIONES 
+                (nombre, estado) 
+                VALUES ( ?, ?`;
+    const values = [nombre, 1];
+
+    connection.query(sql, values, (error, results) => {
+        if (error) throw error;
+        res.status(200).send('PROMOCIONES agregado exitosamente');
+    });
+});
+
+
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT 
                 id_promociones, 
@@ -33,19 +49,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     });
 });
 
-//metodo post PRODUCTOS
-module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
-    const sql = `INSERT INTO PROMOCIONES 
-                (nombre, estado) 
-                VALUES ( ?, ?`;
-    const values = [nombre, 1];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.status(200).send('PROMOCIONES agregado exitosamente');
-    });
-});
 
 module.exports.eliminar = app.put('/', (request, response) => {
     const { id_promociones } = request.body;
