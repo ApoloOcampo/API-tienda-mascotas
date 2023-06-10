@@ -23,9 +23,9 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo GET ESPECIES
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT
-                id_especies,
-                nombre, 
-                estado 
+                ID_ESPECIES,
+                NOMBRE, 
+                ESTADO 
                 FROM ESPECIES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -36,6 +36,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
         }
     })               
 });
+
 
 
 //metodo PATCH ESPECIES

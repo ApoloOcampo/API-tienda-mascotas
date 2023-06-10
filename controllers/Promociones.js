@@ -10,8 +10,8 @@ const app = express();
 module.exports.agregar = app.post('/', (req, res) => {
     const { nombre } = req.body;
     const sql = `INSERT INTO PROMOCIONES 
-                (nombre, estado) 
-                VALUES ( ?, ?`;
+                (NOMBRE, ESTADO) 
+                VALUES ( ?, ?)`;
     const values = [nombre, 1];
 
     connection.query(sql, values, (error, results) => {
@@ -23,8 +23,9 @@ module.exports.agregar = app.post('/', (req, res) => {
 
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT 
-                id_promociones, 
-                nombre
+                ID_PROMOCIONES, 
+                NOMBRE,
+                ESTADO
                 FROM PROMOCIONES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -35,6 +36,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
         }
     })               
 });
+
 
 module.exports.actualizar = app.patch('/', (req, res) => {
     const { id_promociones, nombre } = req.body;
