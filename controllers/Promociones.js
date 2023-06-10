@@ -8,7 +8,7 @@ const app = express();
 
 //metodo post PRODUCTOS
 module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
+    const { NOMBRE } = req.body;
     const sql = `INSERT INTO PROMOCIONES 
                 (NOMBRE, ESTADO) 
                 VALUES ( ?, ?)`;
@@ -39,30 +39,30 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 
 
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { id_promociones, nombre } = req.body;
+    const { ID_PROMOCIONES, NOMBRE } = req.body;
     const sql = `UPDATE PROMOCIONES SET 
-                nombre = ?
-                WHERE id_promociones = ?`;
-    const values = [nombre];
+                NOMBRE = ?
+                WHERE ID_PROMOCIONES = ?`;
+    const values = [NOMBRE];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`PROMOCIONES con id ${id_promociones} actualizado correctamente`);
+        res.send(`PROMOCIONES con id ${ID_PROMOCIONES} actualizado correctamente`);
     });
 });
 
 
 module.exports.eliminar = app.put('/', (request, response) => {
-    const { id_promociones } = request.body;
+    const { ID_PROMOCIONES } = request.body;
     const sql = `UPDATE PROMOCIONES 
                 SET ESTADO = 0 
-                WHERE id_promociones = ?`;
-        connection.query(sql, id_promociones, (error, results) => {
+                WHERE ID_PROMOCIONES = ?`;
+        connection.query(sql, ID_PROMOCIONES, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        response.status(200).send(`PROMOCIONES con id ${id_promociones} eliminado correctamente`);
+        response.status(200).send(`PROMOCIONES con id ${ID_PROMOCIONES} eliminado correctamente`);
       } else {
-        response.status(404).send(`PROMOCIONES con id ${id_promociones} no encontrado`);
+        response.status(404).send(`PROMOCIONES con id ${ID_PROMOCIONES} no encontrado`);
       }
     });
 });

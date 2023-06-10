@@ -8,15 +8,21 @@ const app = express();
 
 //metodo post AdminProducto
 module.exports.agregar = app.post('/', (req, res) => {
-    const { NOMBRE, VALOR, STOCK, IMAGEN, ESTADO, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES } = req.body;
+    const { NOMBRE, VALOR, STOCK, IMAGEN, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES } = req.body;
     const sql = `INSERT INTO PRODUCTOS ( 
-                NOMBRE, 
-                VALOR,
-                STOCK,
-                IMAGEN,
-                ESTADO,
-                ESPECIES_ID_ESPECIES,
-                PROMOCIONES_ID_PROMOCIONES) 
+                PROD.NOMBRE,
+                PROD.VALOR,
+                PROD.STOCK,
+                PROD.IMAGEN,
+                PROD.ESTADO,
+                PROD.PROMOCIONES_ID_PROMOCIONES, 
+                PROD.ESPECIES_ID_ESPECIES,
+                FROM PRODUCTOS PROD
+                LEFT JOIN ESPECIES ESPE
+                    ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                LEFT JOIN PROMOCIONES PROM
+                    ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                    WHERE PROD.ESTADO = 1) 
                 VALUES (?,?,?,?,?,?,?)`;
     const values = [ NOMBRE, VALOR, STOCK, IMAGEN, 1, ESPECIES_ID_ESPECIES, PROMOCIONES_ID_PROMOCIONES ];
 
