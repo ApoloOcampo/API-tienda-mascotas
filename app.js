@@ -51,6 +51,9 @@ function controladores() {
 	app.use('/api/AdminProducto/', AdminProducto.buscar_todo);
     app.use('/api/AdminProducto/', AdminProducto.actualizar);
     app.use('/api/AdminProducto/', AdminProducto.eliminar);
+    app.use('/api/AdminProducto/', AdminProducto.buscar_gato);
+    app.use('/api/AdminProducto/', AdminProducto.buscar_perro);
+    app.use('/api/AdminProducto/', AdminProducto.buscar_otros);
 
 
     //Funcion de consultar Despacho
