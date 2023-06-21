@@ -39,7 +39,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
                 ESPE.NOMBRE AS NOMBRE_ESPECIE,
                 PROM.NOMBRE AS NOMBRE_PROMOCION
                 FROM PRODUCTOS PROD
-                LEFT JOIN ESPECIES ESPE
+                JOIN ESPECIES ESPE
                     ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
                 LEFT JOIN PROMOCIONES PROM
                     ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
@@ -55,23 +55,48 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 
-//metodo patch AdminProducto
-module.exports.actualizar = app.patch('/', (req, res) => {
-    const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = `UPDATE PRODUCTOS SET NOMBRE = ?, 
-                VALOR = ?, 
-                STOCK = ?, 
-                IMAGEN = ?, 
-                PROMOCIONES_ID_PROMOCIONES = ?, 
-                ESPECIES_ID_ESPECIES = ? 
-                WHERE ID_PRODUCTOS = ?`;
-    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES, ID_PRODUCTOS ];
 
+
+
+module.exports.actualizar = app.patch('/', (request, response) => {  
+    const {
+        ID_PRODUCTOS,
+        NOMBRE,
+        VALOR,
+        STOCK,
+        IMAGEN,
+        PROMOCIONES_ID_PROMOCIONES,
+        ESPECIES_ID_ESPECIES
+    } = request.body;
+    
+    const sql = `
+        UPDATE PRODUCTOS
+        SET NOMBRE = ?,
+            VALOR = ?,
+            STOCK = ?,
+            IMAGEN = ?,
+            PROMOCIONES_ID_PROMOCIONES = ?,
+            ESPECIES_ID_ESPECIES = ?
+        WHERE ID_PRODUCTOS = ?
+    `;
+
+    const values = [
+        NOMBRE,
+        VALOR,
+        STOCK,
+        IMAGEN,
+        PROMOCIONES_ID_PROMOCIONES,
+        ESPECIES_ID_ESPECIES,
+        ID_PRODUCTOS
+    ];
+    
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`PRODUCTO con id ${ID_PRODUCTOS} actualizado correctamente`);
-    });
+        response.send(`Producto con id ${ID_PRODUCTOS} actualizado correctamente`);
+    });               
 });
+
+
 
 
 //metodo delete AdminProducto
