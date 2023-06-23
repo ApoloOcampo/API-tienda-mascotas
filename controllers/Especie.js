@@ -7,11 +7,11 @@ const app = express();
 
 //metodo post ESPECIES
 module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
+    const { NOMBRE } = req.body;
     const sql = `INSERT INTO ESPECIES
-                        (nombre, estado)
+                        (NOMBRE, ESTADO)
                         VALUES (?, ?)`;
-    const values = [nombre, 1];
+    const values = [NOMBRE, 1];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -23,9 +23,9 @@ module.exports.agregar = app.post('/', (req, res) => {
 //metodo GET ESPECIES
 module.exports.buscar_todo = app.get('/', (request, response) => {  
     const sql = `SELECT
-                id_especies,
-                nombre, 
-                estado 
+                ID_ESPECIES,
+                NOMBRE, 
+                ESTADO 
                 FROM ESPECIES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -38,33 +38,34 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 
+
 //metodo PATCH ESPECIES
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { id_especies, nombre } = req.body;
+    const { ID_ESPECIES, NOMBRE } = req.body;
     const sql = `UPDATE ESPECIES SET 
-                        nombre = ?
-                        WHERE id_especies = `;
-    const values = [nombre];
+                        NOMBRE = ?
+                        WHERE ID_ESPECIES = `;
+    const values = [NOMBRE];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`ESPECIES con id ${id_especies} actualizado correctamente`);
+        res.send(`ESPECIES con id ${ID_ESPECIES} actualizado correctamente`);
     });
 });
 
 
 //metodo PUT ESPECIES
 module.exports.eliminar = app.put('/', (request, response) => {
-    const { id_especies } = request.body;
+    const { ID_ESPECIES } = request.body;
     const sql = `UPDATE ESPECIES 
                 SET ESTADO = 0 
-                WHERE id_especies = ?`;
+                WHERE ID_ESPECIES = ?`;
     connection.query(sql, id_especies, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
-        response.status(200).send(`ESPECIES con id ${id_especies} eliminado correctamente`);
+        response.status(200).send(`ESPECIES con id ${ID_ESPECIES} eliminado correctamente`);
       } else {
-        response.status(404).send(`ESPECIES con id ${id_especies} no encontrado`);
+        response.status(404).send(`ESPECIES con id ${ID_ESPECIES} no encontrado`);
       }
     });
 });

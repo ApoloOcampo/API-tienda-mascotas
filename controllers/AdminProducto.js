@@ -39,7 +39,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
                 ESPE.NOMBRE AS NOMBRE_ESPECIE,
                 PROM.NOMBRE AS NOMBRE_PROMOCION
                 FROM PRODUCTOS PROD
-                LEFT JOIN ESPECIES ESPE
+                JOIN ESPECIES ESPE
                     ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
                 LEFT JOIN PROMOCIONES PROM
                     ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
@@ -55,23 +55,48 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 
-//metodo patch AdminProducto
-module.exports.actualizar = app.patch('/', (req, res) => {
-    const {ID_PRODUCTOS, NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES } = req.body;
-    const sql = `UPDATE PRODUCTOS SET NOMBRE = ?, 
-                VALOR = ?, 
-                STOCK = ?, 
-                IMAGEN = ?, 
-                PROMOCIONES_ID_PROMOCIONES = ?, 
-                ESPECIES_ID_ESPECIES = ? 
-                WHERE ID_PRODUCTOS = ?`;
-    const values = [ NOMBRE, VALOR, STOCK, IMAGEN, PROMOCIONES_ID_PROMOCIONES, ESPECIES_ID_ESPECIES, ID_PRODUCTOS ];
 
+
+
+module.exports.actualizar = app.patch('/', (request, response) => {  
+    const {
+        ID_PRODUCTOS,
+        NOMBRE,
+        VALOR,
+        STOCK,
+        IMAGEN,
+        PROMOCIONES_ID_PROMOCIONES,
+        ESPECIES_ID_ESPECIES
+    } = request.body;
+    
+    const sql = `
+        UPDATE PRODUCTOS
+        SET NOMBRE = ?,
+            VALOR = ?,
+            STOCK = ?,
+            IMAGEN = ?,
+            PROMOCIONES_ID_PROMOCIONES = ?,
+            ESPECIES_ID_ESPECIES = ?
+        WHERE ID_PRODUCTOS = ?
+    `;
+
+    const values = [
+        NOMBRE,
+        VALOR,
+        STOCK,
+        IMAGEN,
+        PROMOCIONES_ID_PROMOCIONES,
+        ESPECIES_ID_ESPECIES,
+        ID_PRODUCTOS
+    ];
+    
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`PRODUCTO con id ${ID_PRODUCTOS} actualizado correctamente`);
-    });
+        response.send(`Producto con id ${ID_PRODUCTOS} actualizado correctamente`);
+    });               
 });
+
+
 
 
 //metodo delete AdminProducto
@@ -87,4 +112,88 @@ module.exports.eliminar = app.delete('/', (request, response) => {
         response.status(404).send(`PRODUCTO con id ${ID_PRODUCTOS} no encontrado`);
       }
     });
+});
+
+
+//metodo get AdminProducto todo perro
+module.exports.buscar_perro = app.get('/buscar_perro', (request, response) => {  
+    const sql = `SELECT PROD.ID_PRODUCTOS, 
+                PROD.NOMBRE,
+                PROD.VALOR,
+                PROD.STOCK,
+                PROD.IMAGEN, 
+                PROD.PROMOCIONES_ID_PROMOCIONES, 
+                PROD.ESPECIES_ID_ESPECIES,
+                ESPE.NOMBRE AS NOMBRE_ESPECIE,
+                PROM.NOMBRE AS NOMBRE_PROMOCION
+                FROM PRODUCTOS PROD
+                LEFT JOIN ESPECIES ESPE
+                    ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                LEFT JOIN PROMOCIONES PROM
+                    ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                WHERE PROD.ESTADO = 1 AND PROD.ESPECIES_ID_ESPECIES = 1`;
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    })               
+});
+
+
+//metodo get AdminProducto todo gato
+module.exports.buscar_gato = app.get('/buscar_gato', (request, response) => {  
+    const sql = `SELECT PROD.ID_PRODUCTOS, 
+                PROD.NOMBRE,
+                PROD.VALOR,
+                PROD.STOCK,
+                PROD.IMAGEN, 
+                PROD.PROMOCIONES_ID_PROMOCIONES, 
+                PROD.ESPECIES_ID_ESPECIES,
+                ESPE.NOMBRE AS NOMBRE_ESPECIE,
+                PROM.NOMBRE AS NOMBRE_PROMOCION
+                FROM PRODUCTOS PROD
+                LEFT JOIN ESPECIES ESPE
+                    ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                LEFT JOIN PROMOCIONES PROM
+                    ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                WHERE PROD.ESTADO = 1 AND PROD.ESPECIES_ID_ESPECIES = 2`;
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    })               
+});
+
+
+//metodo get AdminProducto otros (OTRAS ESPECIES)
+module.exports.buscar_otros = app.get('/buscar_otros', (request, response) => {  
+    const sql = `SELECT PROD.ID_PRODUCTOS, 
+                PROD.NOMBRE,
+                PROD.VALOR,
+                PROD.STOCK,
+                PROD.IMAGEN, 
+                PROD.PROMOCIONES_ID_PROMOCIONES, 
+                PROD.ESPECIES_ID_ESPECIES,
+                ESPE.NOMBRE AS NOMBRE_ESPECIE,
+                PROM.NOMBRE AS NOMBRE_PROMOCION
+                FROM PRODUCTOS PROD
+                LEFT JOIN ESPECIES ESPE
+                    ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                LEFT JOIN PROMOCIONES PROM
+                    ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                WHERE PROD.ESTADO = 1 AND PROD.ESPECIES_ID_ESPECIES = 3`;
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    })               
 });

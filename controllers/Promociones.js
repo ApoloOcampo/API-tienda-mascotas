@@ -3,29 +3,30 @@ const express = require('express');
 const connection = require('../config/config');
 const app = express();
 
-//http://estilow3b.com/metodos-http-post-get-put-delete/
-
-
-//metodo post PRODUCTOS
+// Método POST para agregar una promoción
 module.exports.agregar = app.post('/', (req, res) => {
-    const { nombre } = req.body;
-    const sql = `INSERT INTO PROMOCIONES 
-                (nombre, estado) 
-                VALUES ( ?, ?`;
-    const values = [nombre, 1];
+    const { ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO } = req.body;
+    const sql = `INSERT INTO PROMOCION 
+                (ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO) 
+                VALUES (?, ?, ?, ?, ?, ?)`;
+    const values = [ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.status(200).send('PROMOCIONES agregado exitosamente');
+        res.status(200).send('Promoción agregada exitosamente');
     });
 });
 
-
-module.exports.buscar_todo = app.get('/', (request, response) => {  
+// Método GET para buscar todas las promociones
+module.exports.buscar_todo = app.get('/', (request, response) => {
     const sql = `SELECT 
-                id_promociones, 
-                nombre
-                FROM PROMOCIONES`;
+                ID_PROMOCION, 
+                FECHA_INICIO,
+                FECHA_FIN,
+                DESCUENTO,
+                ESTADO,
+                ID_PRODUCTO
+                FROM PROMOCION`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -33,34 +34,39 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
         } else {
             response.status(204).send('Sin resultado');
         }
-    })               
-});
-
-module.exports.actualizar = app.patch('/', (req, res) => {
-    const { id_promociones, nombre } = req.body;
-    const sql = `UPDATE PROMOCIONES SET 
-                nombre = ?
-                WHERE id_promociones = ?`;
-    const values = [nombre];
-
-    connection.query(sql, values, (error, results) => {
-        if (error) throw error;
-        res.send(`PROMOCIONES con id ${id_promociones} actualizado correctamente`);
     });
 });
 
+// Método PATCH para actualizar una promoción
+module.exports.actualizar = app.patch('/', (req, res) => {
+    const { ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO } = req.body;
+    const sql = `UPDATE PROMOCION SET 
+                FECHA_INICIO = ?,
+                FECHA_FIN = ?,
+                DESCUENTO = ?,
+                ESTADO = ?,
+                ID_PRODUCTO = ?
+                WHERE ID_PROMOCION = ?`;
+    const values = [FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO, ID_PROMOCION];
 
-module.exports.eliminar = app.put('/', (request, response) => {
-    const { id_promociones } = request.body;
-    const sql = `UPDATE PROMOCIONES 
+    connection.query(sql, values, (error, results) => {
+        if (error) throw error;
+        res.send(`Promoción con ID ${ID_PROMOCION} actualizada correctamente`);
+    });
+});
+
+// Método PATCH para actualizar estado una promoción
+module.exports.eliminar = app.patch('/', (request, response) => {
+    const { ID_PROMOCION } = request.body;
+    const sql = `UPDATE PROMOCION 
                 SET ESTADO = 0 
-                WHERE id_promociones = ?`;
-        connection.query(sql, id_promociones, (error, results) => {
-      if (error) throw error;
-      if (results.affectedRows > 0) {
-        response.status(200).send(`PROMOCIONES con id ${id_promociones} eliminado correctamente`);
-      } else {
-        response.status(404).send(`PROMOCIONES con id ${id_promociones} no encontrado`);
-      }
+                WHERE ID_PROMOCION = ?`;
+    connection.query(sql, ID_PROMOCION, (error, results) => {
+        if (error) throw error;
+        if (results.affectedRows > 0) {
+            response.status(200).send(`Promoción con ID ${ID_PROMOCION} eliminada correctamente`);
+        } else {
+            response.status(404).send(`Promoción con ID ${ID_PROMOCION} no encontrada`);
+        }
     });
 });
