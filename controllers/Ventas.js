@@ -5,7 +5,14 @@ const app = express();
 
 // Agregar una nueva venta
 module.exports.agregar = app.post('/', (req, res) => {
-    const {  FECHA, HORA, MONTO_TOTAL_VENTA, FECHA_DESPACHO,FECHA_ENTREGA } = req.body;
+    const {  
+        FECHA,
+        HORA, 
+        MONTO_TOTAL_VENTA, 
+        FECHA_DESPACHO,
+        FECHA_ENTREGA 
+    } = req.body;
+
     const sql = `INSERT INTO VENTAS ( 
         FECHA, 
         ESTADO,
@@ -13,7 +20,11 @@ module.exports.agregar = app.post('/', (req, res) => {
         MONTO_TOTAL_VENTA) 
         VALUES (?, 1, ?, ?)
         `;
-    const values = [ FECHA, HORA, MONTO_TOTAL_VENTA];
+    const values = [ 
+        FECHA, 
+        HORA, 
+        MONTO_TOTAL_VENTA
+    ];
     let ID_VENTA = 0;
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -60,14 +71,27 @@ module.exports.buscar_todo = app.patch('/', (request, response) => {
 
 // Actualizar una venta
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { ID_VENTA, FECHA, ESTADO, HORA, MONTO_TOTAL_VENTA } = req.body;
+    const {  
+     ID_VENTA,   
+     FECHA, 
+     ESTADO, 
+     HORA, 
+     MONTO_TOTAL_VENTA 
+    } = req.body;
+    
     const sql = `UPDATE VENTAS SET FECHA = ?,
                                     ESTADO = ?,
                                     HORA = ?,
                                     MONTO_TOTAL_VENTA = ?,  
                                     WHERE 
                                     ID_VENTA = ?`;
-    const values = [FECHA, ESTADO, HORA, MONTO_TOTAL_VENTA, ID_VENTA];
+    const values = [
+        FECHA,
+        ESTADO, 
+        HORA, 
+        MONTO_TOTAL_VENTA, 
+        ID_VENTA
+    ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
