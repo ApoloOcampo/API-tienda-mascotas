@@ -32,6 +32,7 @@ app.listen(port, function (){
 });
 
 const AdminProducto = require('./controllers/AdminProducto');
+const AdminUsuario = require('./controllers/AdminUsuario');
 const Despacho = require('./controllers/Despacho');
 const Donacion = require('./controllers/Donacion');
 const Especie = require('./controllers/Especie');
@@ -39,8 +40,9 @@ const ProductosVentas = require('./controllers/ProductosVentas');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 const Seguimiento = require('./controllers/Seguimiento');
-const Usuarios = require('./controllers/Usuarios');
+const Registrar = require('./controllers/Registrar')
 const Ventas = require('./controllers/Ventas');
+const Suscripcion = require('./controllers/Suscripcion');
 
 
 //metodos
@@ -109,10 +111,10 @@ function controladores() {
 
 
     // //Funcion de consultar Usuarios
-    app.use('/api/usuarios/', Usuarios.agregar);
-	app.use('/api/usuarios/', Usuarios.buscar_todo);
-    app.use('/api/usuarios/', Usuarios.actualizar);
-    app.use('/api/usuarios/', Usuarios.eliminar);
+    app.use('/api/AdminUsuario/', AdminUsuario.agregar);
+	app.use('/api/AdminUsuario/', AdminUsuario.buscar_todo);
+    app.use('/api/AdminUsuario/', AdminUsuario.actualizar);
+    app.use('/api/AdminUsuario/', AdminUsuario.eliminar);
 
 
     // //Funcion de consultar Ventas
@@ -126,6 +128,12 @@ function controladores() {
     app.use('/api/Suscripcion/', Suscripcion.buscar_todo);
     app.use('/api/Suscripcion/', Suscripcion.actualizar);
     app.use('/api/Suscripcion/', Suscripcion.eliminar);
+
+        //Funcion de consultar Registro
+    app.use('/api/Registrar/', Registrar.agregar);
+	//app.use('/api/Registrar/', Ventas.buscar_todo);
+    //app.use('/api/Registrar/', Ventas.actualizar);
+    //app.use('/api/Registrar/', Ventas.eliminar);
 
 
 }

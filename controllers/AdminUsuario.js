@@ -7,22 +7,26 @@ const app = express();
 
 //metodo post roles
 module.exports.agregar = app.post('/', (req, res) => {
-    const { rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios } = req.body;
+    const { rut, primer_nombre,segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios } = req.body;
     const sql = 
     `INSERT 
         INTO USUARIOS 
-        (RUT, 
-        DV, 
-        NOMBRE, 
+        RUT,  
+        PRIMER_NOMBRE,
+        SEGUNDO_NOMBRE, 
         AP_PATERNO, 
         AP_MATERNO, 
-        ESTA_SUSCRITO, 
-        ESTADO, 
-        USUARIO_ROLES_ID_ROL, 
-        ID_USUARIO) 
+        ESTA_SUSCRITO,
+        ESTADO,
+        USUARIO_ROLES_ID_ROL,  
+        CORREO,
+        CONTRASEÑA,
+        COMUNA,
+        DIRECCION 
+         
     VALUES 
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios, 1];
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [rut, primer_nombre,segundo_nombre, ap_paterno, ap_materno, esta_suscrito,estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios, 1];
 
     connection.query(sql, values, (error, res) => {
         if (error) throw error;
@@ -35,18 +39,20 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     const sql = 
     `SELECT
         ID_USUARIO,
-        RUT, 
-        DV, 
-        NOMBRE,
-        AP_PATERNO,
+        RUT,  
+        PRIMER_NOMBRE,
+        SEGUNDO_NOMBRE, 
+        AP_PATERNO, 
         AP_MATERNO, 
         ESTA_SUSCRITO, 
         ESTADO, 
-        USUARIO_ROLES_ID_ROL 
-    FROM 
-        USUARIOS 
-    WHERE 
-        ESTADO = 1`;
+        USUARIO_ROLES_ID_ROL,
+        CORREO,
+        CONTRASEÑA,
+        COMUNA,
+        DIRECCION 
+    FROM USUARIOS 
+    WHERE ESTADO = 1`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -60,9 +66,24 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 
 module.exports.actualizar = app.patch('/', (req, res) => {
     const id_usuario = req.params.id
-    const { id, rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios } = req.body;
-    const sql = "UPDATE USUARIOS SET RUT =?, DV =?, NOMBRE =?, AP_PATERNO =?, AP_MATERNO =?, ESTA_SUSCRITO=?, ESTADO=?, USUARIO_ROLES_ID_ROL=?, ID_USUARIO WHERE ID_USUARIO =?";
-    const values = [id, rut, dv, nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, id_usuarios];
+    const { id, rut, primer_nombre, segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios } = req.body;
+    const sql =
+    `UPDATE 
+        USUARIOS 
+    SET 
+        RUT =?  
+        PRIMER_NOMBRE =?
+        SEGUNDO_NOMBRE =?
+        AP_PATERNO =?
+        AP_MATERNO =? 
+        ESTA_SUSCRITO =? 
+        ESTADO =? 
+        USUARIO_ROLES_ID_ROL =?
+        CORREO =?
+        CONTRASEÑA =?
+        COMUNA=?
+        DIRECCION=?`
+    const values = [id, rut, primer_nombre,segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -73,7 +94,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 
 module.exports.eliminar = app.put('/', (request, response) => {
     const { id } = request.body;
-    const sql = "UPDATE USUARIOS SET ESTADO = 0 WHERE ID_USUARIO = ?";
+    const sql = `UPDATE USUARIOS SET ESTADO = 0 WHERE ID_USUARIO = ?`;
     connection.query(sql, id, (error, results) => {
       if (error) throw error;
       if (results.affectedRows > 0) {
