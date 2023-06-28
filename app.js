@@ -131,9 +131,9 @@ function controladores() {
 
         //Funcion de consultar Registro
     app.use('/api/Registrar/', Registrar.agregar);
-	//app.use('/api/Registrar/', Ventas.buscar_todo);
-    //app.use('/api/Registrar/', Ventas.actualizar);
-    //app.use('/api/Registrar/', Ventas.eliminar);
+	app.use('/api/Registrar/', Registrar.buscar_todo);
+    //app.use('/api/Registrar/', Registrar.actualizar);
+    //app.use('/api/Registrar/', Registrar.eliminar);
 
 
 }
