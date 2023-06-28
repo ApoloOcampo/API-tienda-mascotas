@@ -85,7 +85,7 @@ function controladores() {
     app.use('/api/ProductosVentas/', ProductosVentas.eliminar);
 
 
-    // //Funcion de consultar Promociones
+    //Funcion de consultar Promociones
     app.use('/api/Promociones/', Promociones.agregar);
 	app.use('/api/Promociones/', Promociones.buscar_todo);
     app.use('/api/Promociones/', Promociones.actualizar);
@@ -121,5 +121,11 @@ function controladores() {
     app.use('/api/Ventas/', Ventas.actualizar);
     app.use('/api/Ventas/', Ventas.eliminar);
 
-    
+    //Funcion de consultar Suscripcion
+    app.use('/api/Suscripcion/', Suscripcion.agregar);
+    app.use('/api/Suscripcion/', Suscripcion.buscar_todo);
+    app.use('/api/Suscripcion/', Suscripcion.actualizar);
+    app.use('/api/Suscripcion/', Suscripcion.eliminar);
+
+
 }
