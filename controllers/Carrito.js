@@ -7,20 +7,23 @@ const app = express();
 
 module.exports.buscar_todo = app.get('/', (request, response)=> {
     const sql = `
-        SELECT
-            ID_CARRITO,
-            IMAGEN, 
-            CANTIDAD,
-            PRECIO,
-            SUBTOTAL,
-            ESTADO,
-            PRODUCTOS.ID_PRODUCTOS AS ID_PRODUCTOS,
-            PRODUCTOS.NOMBRE AS PRODUCTO
-        FROM CARRITO JOIN PRODUCTOS USING (ID_PRODUCTOS)
-        `;
+    SELECT 
+        ID_CARRITO,
+        CARRITO.IMAGEN, 
+        CANTIDAD,
+        PRECIO,
+        SUBTOTAL,
+        CARRITO.ESTADO,
+        PRODUCTOS.ID_PRODUCTOS AS ID_PRODUCTOS,
+        PRODUCTOS.NOMBRE AS PRODUCTO
+    FROM CARRITO 
+    JOIN PRODUCTOS 
+    ON CARRITO.ID_PRODUCTOS = PRODUCTOS.ID_PRODUCTOS
+     `;
+        
     connection.query(sql, (error, results) => {
         if (error) throw error;
-        if(results.lenght > 0){
+        if(results.length > 0){
             response.status(200).send(results);
         }
         else{
