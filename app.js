@@ -43,6 +43,8 @@ const Seguimiento = require('./controllers/Seguimiento');
 const Registrar = require('./controllers/Registrar')
 const Ventas = require('./controllers/Ventas');
 const Suscripcion = require('./controllers/Suscripcion');
+//Carrito
+const Carrito = require('./controllers/Carrito');
 
 
 //metodos
@@ -80,7 +82,7 @@ function controladores() {
     app.use('/api/Especie/', Especie.eliminar);
 
 
-    // //Funcion de consultar ProductosVentas
+     //Funcion de consultar ProductosVentas
     app.use('/api/ProductosVentas/', ProductosVentas.agregar);
 	app.use('/api/ProductosVentas/', ProductosVentas.buscar_todo);
     app.use('/api/ProductosVentas/', ProductosVentas.actualizar);
@@ -134,6 +136,12 @@ function controladores() {
 	app.use('/api/Registrar/', Registrar.buscar_todo);
     //app.use('/api/Registrar/', Registrar.actualizar);
     //app.use('/api/Registrar/', Registrar.eliminar);
+
+        //Funcion de consultar Carrito
+    app.use('/api/Carrito/', Carrito.agregar);
+    app.use('/api/Carrito/', Carrito.buscar_todo);
+    app.use('/api/Carrito/', Carrito.actualizar);
+    app.use('/api/Carrito/', Carrito.eliminar);
 
 
 }
