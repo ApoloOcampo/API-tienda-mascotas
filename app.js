@@ -42,6 +42,9 @@ const roles = require('./controllers/roles');
 const Seguimiento = require('./controllers/Seguimiento');
 const Usuarios = require('./controllers/Usuarios');
 const Ventas = require('./controllers/Ventas');
+const Carrito = require('./controllers/Carrito');
+const Registrar = require('./controllers/Registrar');
+
 
 
 //metodos
