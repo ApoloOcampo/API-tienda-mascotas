@@ -40,11 +40,8 @@ const ProductosVentas = require('./controllers/ProductosVentas');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 const Seguimiento = require('./controllers/Seguimiento');
-const Registrar = require('./controllers/Registrar')
+const Usuarios = require('./controllers/Usuarios');
 const Ventas = require('./controllers/Ventas');
-const Suscripcion = require('./controllers/Suscripcion');
-//Carrito
-const Carrito = require('./controllers/Carrito');
 
 
 //metodos
@@ -120,10 +117,10 @@ function controladores() {
 
 
     // //Funcion de consultar Ventas
-    app.use('/api/Ventas/', Ventas.agregar);
-	app.use('/api/Ventas/', Ventas.buscar_todo);
-    app.use('/api/Ventas/', Ventas.actualizar);
-    app.use('/api/Ventas/', Ventas.eliminar);
+    app.use('/api/AdminVentas/', AdminVentas.agregar);
+	app.use('/api/AdminVentas/', AdminVentas.buscar_todo);
+    app.use('/api/AdminVentas/', AdminVentas.actualizar);
+    app.use('/api/AdminVentas/', AdminVentas.eliminar);
 
     //Funcion de consultar Suscripcion
     app.use('/api/Suscripcion/', Suscripcion.agregar);

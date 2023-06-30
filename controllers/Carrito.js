@@ -83,12 +83,11 @@ module.exports.agregar = app.post('/', (request, response) => {
     } = request.body;
 
     const sql = `
-        INSERT INTO CARRITO (IMAGEN, ID_PRODUCTOS, CANTIAD, PRECIO, SUBTOTAL, ESTADO)
+        INSERT INTO CARRITO (IMAGEN, ID_PRODUCTOS, CANTIDAD, PRECIO, SUBTOTAL, ESTADO)
         VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
-        ID_CARRITO,
         IMAGEN,
         ID_PRODUCTOS,
         CANTIDAD,

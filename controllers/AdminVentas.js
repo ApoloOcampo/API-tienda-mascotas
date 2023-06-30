@@ -3,6 +3,9 @@ const express = require('express');
 const connection = require('../config/config');
 const app = express();
 
+//http://estilow3b.com/metodos-http-post-get-put-delete/
+
+
 // Agregar una nueva venta
 module.exports.agregar = app.post('/', (req, res) => {
     const {  
