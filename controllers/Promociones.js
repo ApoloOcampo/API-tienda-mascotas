@@ -8,7 +8,7 @@ module.exports.agregar = app.post('/', (req, res) => {
     const { ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO  } = req.body;
     const sql = `INSERT INTO PROMOCIONES 
                 (ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO) 
-                VALUES (?, ?, ?, ?, ?, ?)`;
+                VALUES (?, ?, ?, ?, ?)`;
     const values = [ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO];
 
     connection.query(sql, values, (error, results) => {
