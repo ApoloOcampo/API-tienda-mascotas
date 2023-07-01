@@ -92,10 +92,10 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 });
 
 // Método PATCH para borrado logico de Venta
-module.exports.eliminar = app.patch('/', (request, response) => {
-    const { ID_VENTA } = request.body;
+module.exports.eliminar = app.delete('/:id', (request, response) => {
+    const ID_VENTA  = request.params.id;
     const sql = `UPDATE VENTAS 
-                SET ESTADO = 0 
+                    SET ESTADO = 0 
                 WHERE ID_VENTA = ?`;
     connection.query(sql, ID_VENTA, (error, results) => {
         if (error) throw error;
