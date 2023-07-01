@@ -40,8 +40,8 @@ const ProductosVentas = require('./controllers/ProductosVentas');
 const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 const Seguimiento = require('./controllers/Seguimiento');
-const Usuarios = require('./controllers/Usuarios');
-const Ventas = require('./controllers/Ventas');
+const AdminUsuario = require('./controllers/AdminUsuario');
+const AdminVentas = require('./controllers/AdminVentas');
 const Carrito = require('./controllers/Carrito');
 const Registrar = require('./controllers/Registrar');
 
