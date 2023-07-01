@@ -5,11 +5,11 @@ const app = express();
 
 // Método POST para agregar una promoción
 module.exports.agregar = app.post('/', (req, res) => {
-    const { ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO } = req.body;
-    const sql = `INSERT INTO PROMOCION 
-                (ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO) 
+    const { ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO  } = req.body;
+    const sql = `INSERT INTO PROMOCIONES 
+                (ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO) 
                 VALUES (?, ?, ?, ?, ?, ?)`;
-    const values = [ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO];
+    const values = [ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -20,13 +20,12 @@ module.exports.agregar = app.post('/', (req, res) => {
 // Método GET para buscar todas las promociones
 module.exports.buscar_todo = app.get('/', (request, response) => {
     const sql = `SELECT 
-                ID_PROMOCION, 
+                ID_PROMOCIONES, 
                 FECHA_INICIO,
                 FECHA_FIN,
                 DESCUENTO,
-                ESTADO,
-                ID_PRODUCTO
-                FROM PROMOCION`;
+                ESTADO
+                FROM PROMOCIONES`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -39,34 +38,33 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 
 // Método PATCH para actualizar una promoción
 module.exports.actualizar = app.patch('/', (req, res) => {
-    const { ID_PROMOCION, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO } = req.body;
-    const sql = `UPDATE PROMOCION SET 
+    const { ID_PROMOCIONES, FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO } = req.body;
+    const sql = `UPDATE PROMOCIONES SET 
                 FECHA_INICIO = ?,
                 FECHA_FIN = ?,
                 DESCUENTO = ?,
-                ESTADO = ?,
-                ID_PRODUCTO = ?
-                WHERE ID_PROMOCION = ?`;
-    const values = [FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PRODUCTO, ID_PROMOCION];
+                ESTADO = ?
+                WHERE ID_PROMOCIONES = ?`;
+    const values = [FECHA_INICIO, FECHA_FIN, DESCUENTO, ESTADO, ID_PROMOCIONES];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`Promoción con ID ${ID_PROMOCION} actualizada correctamente`);
+        res.send(`Promoción con ID ${ID_PROMOCIONES} actualizada correctamente`);
     });
 });
 
 // Método PATCH para actualizar estado una promoción
 module.exports.eliminar = app.patch('/', (request, response) => {
-    const { ID_PROMOCION } = request.body;
-    const sql = `UPDATE PROMOCION 
+    const { ID_PROMOCIONES } = request.body;
+    const sql = `UPDATE PROMOCIONES 
                 SET ESTADO = 0 
-                WHERE ID_PROMOCION = ?`;
-    connection.query(sql, ID_PROMOCION, (error, results) => {
+                WHERE ID_PROMOCIONES = ?`;
+    connection.query(sql, ID_PROMOCIONES, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0) {
-            response.status(200).send(`Promoción con ID ${ID_PROMOCION} eliminada correctamente`);
+            response.status(200).send(`Promoción con ID ${ID_PROMOCIONES} eliminada correctamente`);
         } else {
-            response.status(404).send(`Promoción con ID ${ID_PROMOCION} no encontrada`);
+            response.status(404).send(`Promoción con ID ${ID_PROMOCIONES} no encontrada`);
         }
     });
 });
