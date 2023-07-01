@@ -32,6 +32,7 @@ app.listen(port, function (){
 });
 
 const AdminProducto = require('./controllers/AdminProducto');
+const AdminUsuario = require('./controllers/AdminUsuario');
 const Despacho = require('./controllers/Despacho');
 const Donacion = require('./controllers/Donacion');
 const Especie = require('./controllers/Especie');
@@ -40,8 +41,11 @@ const Promociones = require('./controllers/Promociones');
 const roles = require('./controllers/roles');
 const Seguimiento = require('./controllers/Seguimiento');
 const Usuarios = require('./controllers/Usuarios');
-const AdminVentas = require('./controllers/AdminVentas');
-const Suscripcion = require('./controllers/Suscripcion');
+const Ventas = require('./controllers/Ventas');
+const Carrito = require('./controllers/Carrito');
+const Registrar = require('./controllers/Registrar');
+
+
 
 //metodos
 function controladores() {
@@ -78,7 +82,7 @@ function controladores() {
     app.use('/api/Especie/', Especie.eliminar);
 
 
-    // //Funcion de consultar ProductosVentas
+     //Funcion de consultar ProductosVentas
     app.use('/api/ProductosVentas/', ProductosVentas.agregar);
 	app.use('/api/ProductosVentas/', ProductosVentas.buscar_todo);
     app.use('/api/ProductosVentas/', ProductosVentas.actualizar);
@@ -109,10 +113,10 @@ function controladores() {
 
 
     // //Funcion de consultar Usuarios
-    app.use('/api/usuarios/', Usuarios.agregar);
-	app.use('/api/usuarios/', Usuarios.buscar_todo);
-    app.use('/api/usuarios/', Usuarios.actualizar);
-    app.use('/api/usuarios/', Usuarios.eliminar);
+    app.use('/api/AdminUsuario/', AdminUsuario.agregar);
+	app.use('/api/AdminUsuario/', AdminUsuario.buscar_todo);
+    app.use('/api/AdminUsuario/', AdminUsuario.actualizar);
+    app.use('/api/AdminUsuario/', AdminUsuario.eliminar);
 
 
     // //Funcion de consultar Ventas
@@ -126,6 +130,18 @@ function controladores() {
     app.use('/api/Suscripcion/', Suscripcion.buscar_todo);
     app.use('/api/Suscripcion/', Suscripcion.actualizar);
     app.use('/api/Suscripcion/', Suscripcion.eliminar);
+
+        //Funcion de consultar Registro
+    app.use('/api/Registrar/', Registrar.agregar);
+	app.use('/api/Registrar/', Registrar.buscar_todo);
+    //app.use('/api/Registrar/', Registrar.actualizar);
+    //app.use('/api/Registrar/', Registrar.eliminar);
+
+        //Funcion de consultar Carrito
+    app.use('/api/Carrito/', Carrito.agregar);
+    app.use('/api/Carrito/', Carrito.buscar_todo);
+    app.use('/api/Carrito/', Carrito.actualizar);
+    app.use('/api/Carrito/', Carrito.eliminar);
 
 
 }
