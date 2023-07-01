@@ -74,6 +74,7 @@ module.exports.actualizar = app.put('/', (request, response) =>{
 //Metodo POST
 module.exports.agregar = app.post('/', (request, response) => {
     const {
+        
         IMAGEN,
         ID_PRODUCTOS,
         CANTIDAD,
@@ -88,6 +89,7 @@ module.exports.agregar = app.post('/', (request, response) => {
     `;
 
     const values = [
+        
         IMAGEN,
         ID_PRODUCTOS,
         CANTIDAD,
@@ -105,7 +107,10 @@ module.exports.agregar = app.post('/', (request, response) => {
 module.exports.eliminar = app.delete('/:id', (request, response) => {
     const ID_CARRITO = request.params.id;
 
-    const sql = "UPDATE CARRITO SET ESTADO = 0 WHERE ID_CARRITO =?";
+    const sql = `
+        UPDATE CARRITO 
+            SET ESTADO = 0 
+        WHERE ID_CARRITO =?`;
     connection.query(sql, ID_CARRITO, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0){
@@ -114,5 +119,5 @@ module.exports.eliminar = app.delete('/:id', (request, response) => {
         else{
             response.status(400).send(`Venta con id ${ID_CARRITO} no encontrada` )
         }
-    })
-})
+    });
+});
