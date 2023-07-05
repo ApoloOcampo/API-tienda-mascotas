@@ -124,6 +124,7 @@ function controladores() {
 	app.use('/api/AdminVenta/', AdminVenta.buscar_todo);
     app.use('/api/AdminVenta/', AdminVenta.actualizar);
     app.use('/api/AdminVenta/', AdminVenta.eliminar);
+    app.use('/api/AdminVenta/', AdminVenta.buscar_uno);
 
     //Funcion de consultar Suscripcion
     app.use('/api/Suscripcion/', Suscripcion.agregar);

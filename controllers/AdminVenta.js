@@ -106,3 +106,33 @@ module.exports.eliminar = app.delete('/:id', (request, response) => {
         }
     });
 });
+
+//metodo get una Venta
+module.exports.buscar_uno = app.get('/:id', (request, response) => {  
+    const ID_VENTA = request.params.id;
+    const sql = `
+    SELECT
+        VENT.ID_VENTA, 
+        VENT.FECHA,
+        VENT.HORA,
+        VENT.ESTADO,
+        VENT.ID_PRODUCTO,
+        VENT.CANTIDAD,
+        VENT.TOTAL,
+        PROD.ID_PRODUCTOS AS ID_PRODUCTOS,
+        PROD.NOMBRE AS PRODUCTO,
+        PROD.VALOR 
+        FROM VENTAS VENT
+        JOIN PRODUCTOS PROD
+             ON VENT.ID_PRODUCTO = PROD.ID_PRODUCTOS
+            WHERE VENT.ID_VENTA = ?`;
+     
+    connection.query(sql, ID_VENTA, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    })               
+});
