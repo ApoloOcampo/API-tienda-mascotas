@@ -55,9 +55,6 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
 });
 
 
-
-
-
 module.exports.actualizar = app.patch('/', (request, response) => {  
     const {
         ID_PRODUCTOS,
@@ -95,8 +92,6 @@ module.exports.actualizar = app.patch('/', (request, response) => {
         response.send(`Producto con id ${ID_PRODUCTOS} actualizado correctamente`);
     });               
 });
-
-
 
 
 //metodo delete AdminProducto
@@ -197,3 +192,33 @@ module.exports.buscar_otros = app.get('/buscar_otros', (request, response) => {
         }
     })               
 });
+
+
+///metodo get Un Producto
+module.exports.buscar_uno = app.get('/:id', (request, response) => {
+    const ID_PRODUCTOS = request.params.id;
+    const sql = `SELECT PROD.ID_PRODUCTOS, 
+                    PROD.NOMBRE,
+                    PROD.VALOR,
+                    PROD.STOCK,
+                    PROD.IMAGEN, 
+                    PROD.PROMOCIONES_ID_PROMOCIONES, 
+                    PROD.ESPECIES_ID_ESPECIES,
+                    ESPE.NOMBRE AS NOMBRE_ESPECIE,
+                    PROM.NOMBRE AS NOMBRE_PROMOCION
+                    FROM PRODUCTOS PROD
+                    LEFT JOIN ESPECIES ESPE
+                        ON PROD.ESPECIES_ID_ESPECIES = ESPE.ID_ESPECIES
+                    LEFT JOIN PROMOCIONES PROM
+                        ON PROD.PROMOCIONES_ID_PROMOCIONES = PROM.ID_PROMOCIONES
+                    WHERE ID_PRODUCTOS = ?
+    `;
+    connection.query(sql, ID_PRODUCTOS, (error, results) => {
+      if (error) throw error;
+      if (results.length > 0) {
+        response.status(200).send(results[0]);
+      } else {
+        response.status(204).send('Sin resultado');
+      }
+    });
+  });
