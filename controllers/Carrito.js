@@ -34,7 +34,7 @@ module.exports.buscar_todo = app.get('/', (request, response)=> {
 
 //Metodo GET por ID
 
-module.exports.buscar = app.get('/:id', (request, response) => {  
+module.exports.buscar_id = app.get('/:id', (request, response) => {  
     const id_carrito = request.params.id;
     const sql = `
     SELECT 
@@ -43,7 +43,7 @@ module.exports.buscar = app.get('/:id', (request, response) => {
         CANTIDAD,
         PRECIO,
         SUBTOTAL,
-        ESTADO,
+        ESTADO
     FROM CARRITO 
     WHERE ID_CARRITO = ?
      `;
@@ -140,7 +140,7 @@ module.exports.eliminar = app.delete('/:id', (request, response) => {
     const sql = `
         UPDATE CARRITO 
             SET ESTADO = 0 
-        WHERE ID_CARRITO =?`;
+        WHERE ID_CARRITO = ? `;
     connection.query(sql, ID_CARRITO, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0){
