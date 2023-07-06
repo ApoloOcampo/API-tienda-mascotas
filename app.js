@@ -141,6 +141,7 @@ function controladores() {
         //Funcion de consultar Carrito
     app.use('/api/Carrito/', Carrito.agregar);
     app.use('/api/Carrito/', Carrito.buscar_todo);
+    app.use('/api/Carrito/', Carrito.buscar_id);
     app.use('/api/Carrito/', Carrito.actualizar);
     app.use('/api/Carrito/', Carrito.eliminar);
 

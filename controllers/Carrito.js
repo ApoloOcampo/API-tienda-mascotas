@@ -32,6 +32,34 @@ module.exports.buscar_todo = app.get('/', (request, response)=> {
     });
 });
 
+//Metodo GET por ID
+
+module.exports.buscar_id = app.get('/:id', (request, response) => {  
+    const id_carrito = request.params.id;
+    const sql = `
+    SELECT 
+        ID_CARRITO,
+        IMAGEN, 
+        CANTIDAD,
+        PRECIO,
+        SUBTOTAL,
+        ESTADO
+    FROM CARRITO 
+    WHERE ID_CARRITO = ?
+     `;
+    connection.query(sql, id_carrito, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    });               
+});
+
+
+
+
 //Metodo PATCH
 module.exports.actualizar = app.put('/', (request, response) =>{
     const {
@@ -104,13 +132,15 @@ module.exports.agregar = app.post('/', (request, response) => {
     });
 });
 
+
+//Metodo DELETE
 module.exports.eliminar = app.delete('/:id', (request, response) => {
     const ID_CARRITO = request.params.id;
 
     const sql = `
         UPDATE CARRITO 
             SET ESTADO = 0 
-        WHERE ID_CARRITO =?`;
+        WHERE ID_CARRITO = ? `;
     connection.query(sql, ID_CARRITO, (error, results) => {
         if (error) throw error;
         if (results.affectedRows > 0){
