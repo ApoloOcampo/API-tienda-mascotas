@@ -17,8 +17,8 @@ module.exports.agregar = app.post('/', (req, res) => {
                 USUARIOS_ID_USUARIO,
                 CANTIDAD,
                 TOTAL) 
-                VALUES (?,?,?,1,?,1,1,?)`;
-    const values = [ ID_VENTA, FECHA, HORA, 1, ID_PRODUCTO, 1, 1, TOTAL ];
+                VALUES (?,?,?,?,?,1,?,?)`;
+    const values = [ ID_VENTA, FECHA, HORA, 1, ID_PRODUCTO, 1, CANTIDAD, TOTAL ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
@@ -67,14 +67,16 @@ module.exports.actualizar = app.patch('/', (req, res) => {
      TOTAL 
     } = req.body;
     
-    const sql = `UPDATE VENTAS SET FECHA = ?,
-                                    HORA = ?,
-                                    ESTADO = ?,
-                                    ID_PRODUCTO = ?,
-                                    CANTIDAD = ?,
-                                    TOTAL = ?,  
-                                    WHERE 
-                                    ID_VENTA = ?`;
+    const sql = `
+        UPDATE VENTAS
+        SET FECHA = ?,
+            HORA = ?,
+            ESTADO = ?,
+            ID_PRODUCTO = ?,
+            CANTIDAD = ?,
+            TOTAL = ?,  
+         WHERE ID_VENTA = ?
+    `;
     const values = [
         FECHA,
         HORA, 
