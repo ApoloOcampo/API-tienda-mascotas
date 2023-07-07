@@ -7,22 +7,21 @@ const app = express();
 
 //metodo post AdminVenta
 module.exports.agregar = app.post('/', (req, res) => {
-    const { ID_VENTA, FECHA, HORA, ESTADO,ID_PRODUCTO,USUARIOS_ID_USUARIO, CANTIDAD, TOTAL } = req.body;
+    const { ID_VENTA, FECHA, HORA, ESTADO, CANTIDAD ,TOTAL, USUARIOS_ID_USUARIO } = req.body;
     const sql = `INSERT INTO VENTAS ( 
                 ID_VENTA, 
                 FECHA,
                 HORA,
                 ESTADO,
-                ID_PRODUCTO,
-                USUARIOS_ID_USUARIO,
                 CANTIDAD,
-                TOTAL) 
-                VALUES (?,?,?,?,?,1,?,?)`;
-    const values = [ ID_VENTA, FECHA, HORA, 1, ID_PRODUCTO, 1, CANTIDAD, TOTAL ];
+                TOTAL,
+                USUARIOS_ID_USUARIO) 
+                VALUES (?,?,?,?,?,?,?)`;
+    const values = [ ID_VENTA, FECHA, HORA, 1, CANTIDAD, TOTAL, 1 ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.status(200).send('Venta agregado exitosamente');
+        res.status(200).send('Venta agregada exitosamente');
     });
 });
 
@@ -34,7 +33,6 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
         VENT.FECHA,
         VENT.HORA,
         VENT.ESTADO,
-        VENT.ID_PRODUCTO,
         VENT.CANTIDAD,
         VENT.TOTAL,
         PROD.ID_PRODUCTOS AS ID_PRODUCTOS,
@@ -62,7 +60,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
      FECHA,
      HORA, 
      ESTADO, 
-     ID_PRODUCTO,
      CANTIDAD,
      TOTAL 
     } = req.body;
@@ -72,18 +69,16 @@ module.exports.actualizar = app.patch('/', (req, res) => {
         SET FECHA = ?,
             HORA = ?,
             ESTADO = ?,
-            ID_PRODUCTO = ?,
             CANTIDAD = ?,
-            TOTAL = ?,  
+            TOTAL = ?  
          WHERE ID_VENTA = ?
     `;
     const values = [
         FECHA,
         HORA, 
         ESTADO, 
-        ID_PRODUCTO,
         CANTIDAD,
-        TOTAL, 
+        TOTAL,
         ID_VENTA
     ];
 
@@ -118,7 +113,6 @@ module.exports.buscar_uno = app.get('/:id', (request, response) => {
         VENT.FECHA,
         VENT.HORA,
         VENT.ESTADO,
-        VENT.ID_PRODUCTO,
         VENT.CANTIDAD,
         VENT.TOTAL,
         PROD.ID_PRODUCTOS AS ID_PRODUCTOS,
