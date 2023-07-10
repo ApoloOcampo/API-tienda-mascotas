@@ -104,26 +104,26 @@ module.exports.agregar = app.post('/', (request, response) => {
     const {
         
         IMAGEN,
+        NOMBRE,
         ID_PRODUCTOS,
         CANTIDAD,
         PRECIO,
-        SUBTOTAL,
-        ESTADO
+        SUBTOTAL
     } = request.body;
 
     const sql = `
-        INSERT INTO CARRITO (IMAGEN, ID_PRODUCTOS, CANTIDAD, PRECIO, SUBTOTAL, ESTADO)
+        INSERT INTO CARRITO (IMAGEN, NOMBRE, ID_PRODUCTOS, CANTIDAD, PRECIO, SUBTOTAL)
         VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
         
         IMAGEN,
+        NOMBRE,
         ID_PRODUCTOS,
         CANTIDAD,
         PRECIO,
-        SUBTOTAL,
-        1
+        SUBTOTAL
     ];
 
     connection.query(sql, values,(error, results) => {
