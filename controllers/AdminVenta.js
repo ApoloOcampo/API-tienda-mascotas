@@ -60,8 +60,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
      FECHA,
      HORA, 
      ESTADO, 
-     CANTIDAD,
-     TOTAL 
+     CANTIDAD
     } = req.body;
     
     const sql = `
@@ -69,8 +68,7 @@ module.exports.actualizar = app.patch('/', (req, res) => {
         SET FECHA = ?,
             HORA = ?,
             ESTADO = ?,
-            CANTIDAD = ?,
-            TOTAL = ?  
+            CANTIDAD = ? 
          WHERE ID_VENTA = ?
     `;
     const values = [
@@ -78,7 +76,6 @@ module.exports.actualizar = app.patch('/', (req, res) => {
         HORA, 
         ESTADO, 
         CANTIDAD,
-        TOTAL,
         ID_VENTA
     ];
 
@@ -88,19 +85,18 @@ module.exports.actualizar = app.patch('/', (req, res) => {
     });
 });
 
-// Método PATCH para borrado logico de Venta
-module.exports.eliminar = app.delete('/:id', (request, response) => {
-    const ID_VENTA  = request.params.id;
-    const sql = `UPDATE VENTAS 
-                    SET ESTADO = 0 
+//metodo delete AdminProducto
+module.exports.eliminar = app.delete('/', (request, response) => {
+    const { ID_VENTA } = request.body;
+    const sql = `DELETE FROM VENTAS 
                 WHERE ID_VENTA = ?`;
     connection.query(sql, ID_VENTA, (error, results) => {
-        if (error) throw error;
-        if (results.affectedRows > 0) {
-            response.status(200).send(`Venta con ID ${ID_VENTA} eliminada correctamente`);
-        } else {
-            response.status(404).send(`Venta con ID ${ID_VENTA} no encontrada`);
-        }
+      if (error) throw error;
+      if (results.affectedRows > 0) {
+        response.status(200).send(`Venta con id ${ID_VENTA} eliminada correctamente`);
+      } else {
+        response.status(404).send(`Venta con id ${ID_VENTA} no encontrada`);
+      }
     });
 });
 
