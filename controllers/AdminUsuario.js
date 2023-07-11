@@ -93,6 +93,10 @@ module.exports.actualizar = app.patch('/', (req, res) => {
 });
 
 
+
+
+
+
 //Metodo DELETE
 module.exports.eliminar = app.delete('/:id', (request, response) => {
     const ID_USUARIO = request.params.id;
@@ -111,16 +115,16 @@ module.exports.eliminar = app.delete('/:id', (request, response) => {
 });
 
 
-// module.exports.eliminar = app.delete('/:id', (request, response) => {
+// module.exports.eliminar = app.delete('/', (request, response) => {
 //     const { ID_USUARIO } = request.body;
 //     const sql = `DELETE FROM USUARIOS
 //                  WHERE ID_USUARIO = ?`;
 //     connection.query(sql, ID_USUARIO, (error, results) => {
 //       if (error) throw error;
 //       if (results.affectedRows > 0) {
-//         response.status(200).send(`USUARIOS con id ${ID_USUARIO} eliminado correctamente`);
+//         response.status(200).send(`USUARIO con id ${ID_USUARIO} eliminado correctamente`);
 //       } else {
-//         response.status(404).send(`USUARIOS con id ${ID_USUARIO} no encontrado`);
+//         response.status(404).send(`USUARIO con id ${ID_USUARIO} no encontrado`);
 //       }
 //     });
 // });
