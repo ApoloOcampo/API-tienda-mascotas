@@ -62,7 +62,7 @@ module.exports.buscar_id = app.get('/:id', (request, response) => {
 
 
 //Metodo PATCH
-module.exports.actualizar = app.put('/', (request, response) =>{
+module.exports.actualizar = app.patch('/', (req, res) =>{
     const {
         ID_CARRITO,
         IMAGEN,
@@ -70,8 +70,8 @@ module.exports.actualizar = app.put('/', (request, response) =>{
         CANTIDAD,
         PRECIO,
         SUBTOTAL,
-        ESTADO
-    } = request.body;
+        ESTADO // Posible arrego aqui cambiara estado a 1
+    } = req.body;
 
     const sql = `
         UPDATE CARRITO
@@ -96,7 +96,7 @@ module.exports.actualizar = app.put('/', (request, response) =>{
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        response.send(`Producto con id ${ID_CARRITO} actualizado correctamente`)
+        res.send(`Producto con id ${ID_CARRITO} actualizado correctamente`)
     });   
 });
 

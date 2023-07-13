@@ -64,7 +64,7 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
-
+// Metodo PATCH
 module.exports.actualizar = app.patch('/', (req, res) => {
     const id_usuario = req.params.id
     const { id, rut, primer_nombre, segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios } = req.body;
