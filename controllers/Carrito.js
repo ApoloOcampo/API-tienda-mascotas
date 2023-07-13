@@ -8,17 +8,18 @@ const app = express();
 module.exports.buscar_todo = app.get('/', (request, response)=> {
     const sql = `
     SELECT 
-        ID_CARRITO,
-        CARRITO.IMAGEN, 
-        CANTIDAD,
-        PRECIO,
-        SUBTOTAL,
-        CARRITO.ESTADO,
-        PRODUCTOS.ID_PRODUCTOS AS ID_PRODUCTOS,
-        PRODUCTOS.NOMBRE AS PRODUCTO
-    FROM CARRITO 
-    JOIN PRODUCTOS 
+    CARRITO.ID_CARRITO,
+    CARRITO.IMAGEN,
+    CARRITO.CANTIDAD,
+    CARRITO.PRECIO,
+    CARRITO.SUBTOTAL,
+    CARRITO.ESTADO,
+    PRODUCTOS.ID_PRODUCTOS,
+    PRODUCTOS.NOMBRE AS PRODUCTO
+FROM CARRITO 
+JOIN PRODUCTOS 
     ON CARRITO.ID_PRODUCTOS = PRODUCTOS.ID_PRODUCTOS
+WHERE CARRITO.ESTADO = 1;
      `;
         
     connection.query(sql, (error, results) => {
@@ -133,21 +134,35 @@ module.exports.agregar = app.post('/', (request, response) => {
 });
 
 
-//Metodo DELETE
-module.exports.eliminar = app.delete('/:id', (request, response) => {
-    const ID_CARRITO = request.params.id;
+// //Metodo DELETE
+// module.exports.eliminar = app.delete('/:id', (request, response) => {
+//     const ID_CARRITO = request.params.id;
 
+//     const sql = `
+//     DELETE FROM carrito WHERE 1;
+
+//     `;
+//     connection.query(sql, ID_CARRITO, (error, results) => {
+//         if (error) throw error;
+//         if (results.affectedRows > 0){
+//             response.status(200).send(`Venta con id ${ID_CARRITO} a sido eliminado correctamente`);    
+//         }
+//         else{
+//             response.status(400).send(`Venta con id ${ID_CARRITO} no encontrada` )
+//         }
+//     });
+// });
+
+module.exports.eliminar = app.delete('', (request, response) => {
     const sql = `
-        UPDATE CARRITO 
-            SET ESTADO = 0 
-        WHERE ID_CARRITO = ? `;
-    connection.query(sql, ID_CARRITO, (error, results) => {
+    DELETE FROM CARRITO WHERE 1;
+    `;
+    connection.query(sql, (error, results) => {
         if (error) throw error;
-        if (results.affectedRows > 0){
-            response.status(200).send(`Venta con id ${ID_CARRITO} a sido eliminado correctamente`);    
-        }
-        else{
-            response.status(400).send(`Venta con id ${ID_CARRITO} no encontrada` )
+        if (results.affectedRows > 0) {
+            response.status(200).send('Todos los registros de la tabla carrito han sido eliminados correctamente');
+        } else {
+            response.status(400).send('No se encontraron registros en la tabla carrito');
         }
     });
 });
