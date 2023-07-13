@@ -64,36 +64,39 @@ module.exports.buscar_todo = app.get('/', (request, response) => {
     })               
 });
 
-// Metodo PATCH
-module.exports.actualizar = app.patch('/', (req, res) => {
-    const id_usuario = req.params.id
-    const { id, rut, primer_nombre, segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios } = req.body;
+
+module.exports.actualizar = app.patch('/', (request, response) => {
+    //const id_usuario = req.params.id
+    const {rut, primer_nombre, segundo_nombre, ap_paterno, ap_materno,  correo, contraseña, comuna, direccion, id_usuario } = request.body;
+
     const sql =
     `UPDATE 
         USUARIOS 
     SET 
-        RUT =?  
-        PRIMER_NOMBRE =?
-        SEGUNDO_NOMBRE =?
-        AP_PATERNO =?
-        AP_MATERNO =? 
-        ESTA_SUSCRITO =? 
-        ESTADO =? 
-        USUARIO_ROLES_ID_ROL =?
-        CORREO =?
-        CONTRASEÑA =?
-        COMUNA=?
-        DIRECCION=?`
-    const values = [id, rut, primer_nombre,segundo_nombre, ap_paterno, ap_materno, esta_suscrito, estado, usuario_roles_id_rol, correo, contraseña, comuna, direccion, id_usuarios];
+        RUT =?,  
+        PRIMER_NOMBRE =?,
+        SEGUNDO_NOMBRE =?,
+        AP_PATERNO =?,
+        AP_MATERNO =?,
+        
+        CORREO =?,
+        CONTRASEÑA =?,
+        COMUNA=?,
+        DIRECCION=?
+    WHERE ID_USUARIO = ?
+    `;
+    const values = [rut, primer_nombre,segundo_nombre, ap_paterno, ap_materno, correo, contraseña, comuna, direccion, id_usuario];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        res.send(`Usuario con id ${id} actualizado correctamente`);
+        response.send(`Usuario con id ${id_usuario} actualizado correctamente`);
     });
 });
 
 
-
+// ESTA_SUSCRITO =?,   RECORDAR AGREGAR ESTOS CAMPO DENTRO DE LA VARIABLE Y EL VALUES
+// ESTADO =?, 
+// USUARIO_ROLES_ID_ROL =?,
 
 
 
