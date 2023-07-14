@@ -62,13 +62,24 @@ module.exports.buscar_id = app.get('/:id', (request, response) => {
 
 
 //Metodo PATCH
+<<<<<<< HEAD
 module.exports.actualizar = app.patch('/', (request, response) =>{
 
+=======
+module.exports.actualizar = app.patch('/', (req, res) =>{
+>>>>>>> 35b84818ad2475acc6a3a6b43f2b80d1226bdec3
     const {
         
         CANTIDAD,
+<<<<<<< HEAD
         ID_CARRITO
     } = request.body;
+=======
+        PRECIO,
+        SUBTOTAL,
+        ESTADO // Posible arrego aqui cambiara estado a 1
+    } = req.body;
+>>>>>>> 35b84818ad2475acc6a3a6b43f2b80d1226bdec3
 
 
     const sql = `
@@ -85,12 +96,17 @@ module.exports.actualizar = app.patch('/', (request, response) =>{
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
+<<<<<<< HEAD
         if (results.length > 0) {
             response.status(200).send(results);
         } else {
             response.status(204).send('Sin resultado');
         }
     });    
+=======
+        res.send(`Producto con id ${ID_CARRITO} actualizado correctamente`)
+    });   
+>>>>>>> 35b84818ad2475acc6a3a6b43f2b80d1226bdec3
 });
 
 //Metodo POST
