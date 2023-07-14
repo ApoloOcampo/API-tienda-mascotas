@@ -94,7 +94,7 @@ module.exports.actualizar = app.patch('/', (request, response) =>{
 
     const sql = `
         UPDATE CARRITO
-        SET CANTIDAD = ? + 1
+        SET CANTIDAD = ? 
         WHERE ID_CARRITO = ?
     `;
 
