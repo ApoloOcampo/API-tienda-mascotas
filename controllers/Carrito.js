@@ -62,42 +62,35 @@ module.exports.buscar_id = app.get('/:id', (request, response) => {
 
 
 //Metodo PATCH
-module.exports.actualizar = app.put('/', (request, response) =>{
+module.exports.actualizar = app.patch('/', (request, response) =>{
+
     const {
-        ID_CARRITO,
-        IMAGEN,
-        ID_PRODUCTOS,
+        
         CANTIDAD,
-        PRECIO,
-        SUBTOTAL,
-        ESTADO
+        ID_CARRITO
     } = request.body;
+
 
     const sql = `
         UPDATE CARRITO
-        SET IMAGEN =?,
-            ID_PRODUCTOS =?,
-            CANTIDAD =?,
-            PRECIO =?,
-            SUBTOTAL =?,
-            ESTADO = ?
-        WHERE ID_CARRITO =?
+        SET CANTIDAD = ? + 1
+        WHERE ID_CARRITO = ?
     `;
 
     const values = [
-        ID_CARRITO,
-        IMAGEN,
-        ID_PRODUCTOS,
+        
         CANTIDAD,
-        PRECIO,
-        SUBTOTAL,
-        ESTADO
+        ID_CARRITO
     ];
 
     connection.query(sql, values, (error, results) => {
         if (error) throw error;
-        response.send(`Producto con id ${ID_CARRITO} actualizado correctamente`)
-    });   
+        if (results.length > 0) {
+            response.status(200).send(results);
+        } else {
+            response.status(204).send('Sin resultado');
+        }
+    });    
 });
 
 //Metodo POST
@@ -134,24 +127,24 @@ module.exports.agregar = app.post('/', (request, response) => {
 });
 
 
-// //Metodo DELETE
-// module.exports.eliminar = app.delete('/:id', (request, response) => {
-//     const ID_CARRITO = request.params.id;
+//Metodo DELETE
+module.exports.eliminar = app.delete('/:id', (request, response) => {
+    const ID_CARRITO = request.params.id;
 
-//     const sql = `
-//     DELETE FROM carrito WHERE 1;
+    const sql = `DELETE FROM CARRITO
+                      WHERE ID_CARRITO = ?
 
-//     `;
-//     connection.query(sql, ID_CARRITO, (error, results) => {
-//         if (error) throw error;
-//         if (results.affectedRows > 0){
-//             response.status(200).send(`Venta con id ${ID_CARRITO} a sido eliminado correctamente`);    
-//         }
-//         else{
-//             response.status(400).send(`Venta con id ${ID_CARRITO} no encontrada` )
-//         }
-//     });
-// });
+    `;
+    connection.query(sql, ID_CARRITO, (error, results) => {
+        if (error) throw error;
+        if (results.affectedRows > 0){
+            response.status(200).send(`Venta con id ${ID_CARRITO} a sido eliminado correctamente`);    
+        }
+        else{
+            response.status(400).send(`Venta con id ${ID_CARRITO} no encontrada` )
+        }
+    });
+});
 
 module.exports.eliminar = app.delete('', (request, response) => {
     const sql = `
