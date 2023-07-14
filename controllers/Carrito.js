@@ -12,7 +12,7 @@ module.exports.buscar_todo = app.get('/', (request, response)=> {
     CARRITO.IMAGEN,
     CARRITO.CANTIDAD,
     CARRITO.PRECIO,
-    CARRITO.SUBTOTAL,
+    (CARRITO.CANTIDAD * CARRITO.PRECIO) AS SUBTOTAL,
     CARRITO.ESTADO,
     PRODUCTOS.ID_PRODUCTOS,
     PRODUCTOS.NOMBRE AS PRODUCTO
@@ -44,6 +44,7 @@ module.exports.buscar_id = app.get('/:id', (request, response) => {
         CANTIDAD,
         PRECIO,
         SUBTOTAL,
+        SUM(SUBTOTAL) AS SUBTOTALRESUMEN,
         ESTADO
     FROM CARRITO 
     WHERE ID_CARRITO = ?
@@ -57,6 +58,28 @@ module.exports.buscar_id = app.get('/:id', (request, response) => {
         }
     });               
 });
+
+
+
+module.exports.sumarSubtotales = app.get('/subtotal', (request, response) => {
+    const sql = `
+      SELECT 
+        SUM(SUBTOTAL) AS SUBTOTALRESUMEN
+      FROM CARRITO
+    `;
+    
+    connection.query(sql, (error, results) => {
+      if (error) {
+        console.error('Error al ejecutar la consulta', error);
+        response.status(500).send('Error al obtener la suma de los subtotales');
+        return;
+      }
+      
+      const totalSubtotal = results[0].total_subtotal;
+      response.status(200).json({ subtotal: totalSubtotal });
+    });
+  });
+  
 
 
 
